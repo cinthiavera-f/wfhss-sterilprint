@@ -213,6 +213,19 @@ body.simple-mode .expert-note{display:none}
 .weigh-tip{background:#EFF6FF;border:1px solid rgba(59,130,246,.2);border-radius:5px;padding:7px 9px;margin-bottom:9px;font-size:10px;color:#1E40AF;line-height:1.4}
 .bkv-box{background:linear-gradient(135deg,var(--pp),#D1FAE5);border:1px solid rgba(5,150,105,.25);border-radius:6px;padding:10px;margin-top:6px;text-align:center}
 .bkv-num{font-size:22px;font-weight:700;font-family:var(--mono);color:var(--p)}
+.submit-panel{background:linear-gradient(135deg,#1B3A6B,#253F6E);border-radius:12px;padding:20px;margin-top:16px;border:1px solid rgba(58,143,143,.3)}
+.submit-panel h3{color:#7DD3D3;font-size:13px;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px}
+.submit-panel p{color:rgba(255,255,255,.6);font-size:11px;margin-bottom:14px;line-height:1.5}
+.submit-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.submit-field label{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+.submit-field input,.submit-field textarea{width:100%;padding:6px 8px;border:1px solid rgba(255,255,255,.15);border-radius:6px;background:rgba(255,255,255,.08);color:white;font-size:12px;font-family:inherit}
+.submit-field textarea{min-height:60px;resize:vertical;grid-column:1/-1}
+.btn-submit{width:100%;padding:12px;background:linear-gradient(135deg,#3A8F8F,#2D7070);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:all .2s}
+.btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(58,143,143,.4)}
+.btn-submit:disabled{background:#555;cursor:not-allowed;transform:none}
+.submit-status{margin-top:10px;padding:10px;border-radius:6px;font-size:12px;text-align:center;display:none}
+.submit-ok{background:rgba(5,150,105,.2);border:1px solid rgba(5,150,105,.4);color:#6EE7B7}
+.submit-err{background:rgba(220,38,38,.2);border:1px solid rgba(220,38,38,.4);color:#FCA5A5}
 .bkv-sub{font-size:9px;color:var(--slate);margin-top:2px;line-height:1.4}
 .pol-sel{width:210px;padding:6px 8px;border:1.5px solid var(--border);border-radius:5px;font-family:'IBM Plex Sans',sans-serif;font-size:11px;background:var(--white);outline:none;cursor:pointer}
 .pol-sel:focus{border-color:var(--teal)}
@@ -678,9 +691,21 @@ body.simple-mode .expert-note{display:none}
             <div class="isec-h"><span class="isec-ht">Rigid container — breakeven &amp; cleaning <span class="sc-tag sp2">P1-B</span></span></div>
             <div class="isec-body">
               <div class="explain ex-p">At what number of reuse cycles does the container have lower total CO₂e than flexible barrier? The tool compares CO₂e per set over the container's full lifetime vs the equivalent flexible barrier. ⚠ Internal analysis only — Phase 1.</div>
-              <div class="ir" style="margin-top:8px"><div><div class="iname">Container weight — empty + lid <span class="tc t1c">T1</span></div><div class="expert-note">Weigh empty body + lid. No instruments, no filters. Bonn heights: 9/12/15/18 cm — weigh each type used.</div></div><div class="ivw"><input class="inum" id="p-cont-kg" type="number" value="1.8" step="0.1" oninput="calc()"><span class="iunit">kg</span></div></div>
+              <div class="ir" style="margin-top:8px"><div><div class="iname">Container weight — body + lid + filter holder <span class="tc t1c">T1</span></div><div class="expert-note">Weigh complete reusable assembly: body + lid + filter holder (portafiltro). Do NOT include disposable filter insert (paper, PTFE or Venturi). Bonn heights: 9/12/15/18 cm — weigh each type used. ⚠ Pending manufacturer confirmation: Aesculap/KLS Martin.</div></div><div class="ivw"><input class="inum" id="p-cont-kg" type="number" value="1.8" step="0.1" oninput="calc()"><span class="iunit">kg</span></div></div>
               <div class="ir"><div><div class="iname">Container EF — manufacturing <span class="tc t2c">T2</span></div><div class="expert-note">ecoinvent 3.10 proxy — aluminium alloy: ~8.2 kg CO₂e/kg. Use manufacturer EPD if available (Phase 2 target).</div></div><div class="ivw"><input class="inum" id="p-cont-ef" type="number" value="8.2" step="0.1" oninput="calc()"><span class="iunit">kg CO₂e/kg</span></div></div>
               <div class="ir"><div><div class="iname">Validated lifetime <span class="tc t1c">T1</span></div><div class="expert-note">⚠ MANUFACTURER CERTIFICATE ONLY — never estimate. France ref: ~1000 cycles. Most sensitive P1 parameter.</div></div><div class="ivw"><input class="inum" id="p-cont-life" type="number" value="1000" step="100" oninput="calc()"><span class="iunit">cycles</span></div></div>
+              <div class="ir" style="background:#F0FDF9;border:1px solid rgba(5,150,105,.2);border-radius:8px;padding:10px;margin-bottom:4px">
+                <div style="font-size:10px;font-weight:700;color:#059669;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Disposable filter system — select type used</div>
+                <div class="ir" style="background:transparent;border:none;padding:0;margin-bottom:6px"><div><div class="iname">Filter system <span class="tc t1c">T1</span></div><div class="expert-note">Select the filter type used in your containers. Paper = single use (1 cycle). PTFE/Teflon = semi-permanent (up to 1 year or 100 cycles or until visible damage). Venturi = replaces paper/PTFE system entirely — enter Venturi weight and lifetime separately.</div></div>
+                <div class="ivw"><select class="inum" id="p-filter-type" onchange="toggleFilterType();calc()" style="width:140px;font-size:11px;padding:4px 6px">
+                  <option value="paper">Paper (single use)</option>
+                  <option value="ptfe">PTFE / Teflon (semi-permanent)</option>
+                  <option value="venturi">Venturi system</option>
+                </select></div></div>
+                <div class="ir" style="background:transparent;border:none;padding:0;margin-bottom:6px" id="filter-weight-row"><div><div class="iname">Filter weight <span class="tc t1c">T1</span></div><div class="expert-note">Weigh one filter insert (paper, PTFE or Venturi unit). Typical paper filter: 5–15 g. PTFE: 10–25 g. Venturi: 20–50 g.</div></div><div class="ivw"><input class="inum" id="p-filter-kg" type="number" value="0.010" step="0.001" oninput="calc()"><span class="iunit">kg</span></div></div>
+                <div class="ir" style="background:transparent;border:none;padding:0;margin-bottom:6px" id="filter-ef-row"><div><div class="iname">Filter EF <span class="tc t2c">T2</span></div><div class="expert-note">Paper filter: ~1.6 kg CO₂e/kg (paper/cellulose, ecoinvent 3.10). PTFE: ~6.2 kg CO₂e/kg (PTFE polymer, ecoinvent 3.10). Venturi (polypropylene): ~3.8 kg CO₂e/kg.</div></div><div class="ivw"><input class="inum" id="p-filter-ef" type="number" value="1.6" step="0.1" oninput="calc()"><span class="iunit">kg CO₂e/kg</span></div></div>
+                <div class="ir" style="background:transparent;border:none;padding:0" id="filter-life-row"><div><div class="iname">Filter lifetime <span class="tc t1c">T1</span></div><div class="expert-note">Paper: 1 cycle (enter 1). PTFE: up to 100 cycles or 1 year — enter cycles used in your protocol. Venturi: manufacturer specification.</div></div><div class="ivw"><input class="inum" id="p-filter-life" type="number" value="1" step="1" oninput="calc()"><span class="iunit">cycles</span></div></div>
+              </div>
               <div class="ir"><div><div class="iname">Container cleaning — electricity <span class="tc t2c">T2</span></div><div class="expert-note">WD kWh ÷ containers per load. Bonn: ~2.2 kWh/container (11 kWh ÷ 5 containers).</div></div><div class="ivw"><input class="inum" id="p-cont-elec" type="number" value="2.2" step="0.1" oninput="calc()"><span class="iunit">kWh/cycle</span></div></div>
               <div class="bkv-box" id="bkv-box"><div class="bkv-num" id="bkv-num">—</div><div class="bkv-sub" id="bkv-sub" style="font-size:10px;color:var(--slate)">Enter container data to calculate breakeven</div></div>
             </div>
@@ -856,7 +881,7 @@ function goTo(id){
   document.querySelectorAll('.hn').forEach(b=>b.classList.remove('active'));
   const hn=document.getElementById('hn-'+id);
   if(hn) hn.classList.add('active');
-  if(id==='s3') buildResults();
+  if(id==='s3'){buildResults();var _sn=document.getElementById('submit-name-confirm');var _sd=document.getElementById('submit-date');if(_sn){var _nm=document.getElementById('setup-name');if(_nm)_sn.value=_nm.value;}if(_sd)_sd.value=new Date().toLocaleDateString();}
   document.getElementById(id).scrollTop=0;
 }
 function showP(p){
@@ -993,7 +1018,12 @@ function calc(){
     pctPaper>0?v('p-ef-paper'):v('p-ef-sms');
   const cMfg=v('p-cont-kg')*v('p-cont-ef');
   const cLife=Math.max(1,v('p-cont-life'));
-  const cCO2perSet=(cMfg/cLife)+(v('p-cont-elec')*ef); // amortised mfg + cleaning
+  // Filter system CO2e per cycle
+  const fKg=v('p-filter-kg')||0.010;
+  const fEF=v('p-filter-ef')||1.6;
+  const fLife=Math.max(1,v('p-filter-life')||1);
+  const filterCO2perSet=(fKg*fEF)/fLife;
+  const cCO2perSet=(cMfg/cLife)+(v('p-cont-elec')*ef)+filterCO2perSet; // amortised mfg + cleaning + filter
   const flexCO2perSet=wFlex*efFlex;
   // Weighted average per set
   const pCO2=(pctCont*cCO2perSet+((pctSMS+pctPaper)*flexCO2perSet));
@@ -1222,6 +1252,81 @@ function sp(code,title,la,va,lb,vb,meaning,unit,col){
     </div>
     <div class="sc-mean">${meaning}</div>
   </div>`;
+}
+
+
+// ── SUBMIT TO GOOGLE SHEETS ──────────────────────────────────────────
+var GS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyEaFEvOV94aeLXQvkbBDh-omYXREBplYd5Fd05aaLCaCc0txgO2n2Q3MpnOBYfNtqQLQ/exec';
+function collectData(){
+  var v=function(id){var el=document.getElementById(id);return el?(el.value||''):'';};
+  var sel=function(id){var el=document.getElementById(id);return el?el.value:'';};
+  var txt=function(id){var el=document.getElementById(id);return el?el.textContent:'';};
+  return {
+    'Timestamp':new Date().toISOString(),
+    'Pilot Name':v('setup-name'),'Role':v('setup-role'),
+    'Hospital':v('setup-hospital'),'Country':sel('setup-country'),
+    'Cluster':txt('cluster-badge'),'Grid EF (kg CO2e/kWh)':v('setup-ef'),
+    'WD Electricity (kWh/cycle)':v('w-elec'),'WD Water (L/cycle)':v('w-water'),
+    'Detergent (mL/40L)':v('w-det'),'Drying Activator (mL)':v('w-act'),
+    'WD Cycles/day':v('w-cycles'),'Working Days/month':v('w-days'),
+    'Old WD Electricity (kWh)':v('w-old-elec'),'Old WD Water (L)':v('w-old-water'),
+    'Autoclave Model':v('s-model'),'Elec Standard Cycle (kWh)':v('s-elec-std'),
+    'Elec 18min Cycle (kWh)':v('s-elec-18'),'Water RO/cycle (L)':v('s-water-ro'),
+    'Water Vacuum Pump (L)':v('s-water-vac'),'Physical Sets/cycle':v('s-sets'),
+    'Max Validated Load (STE)':v('s-max-load'),'BD Tests/week':v('s-bd-tests'),
+    'BD Water/test (L)':v('s-bd-water'),'Autoclave Cycles/day':v('s-cycles'),
+    '% 18min cycles':v('s-pct18'),'Old Autoclave Elec (kWh)':v('s-old-elec'),
+    'Old Vacuum Water (L)':v('s-old-vac'),
+    '% Container':v('p-pct-cont'),'% SMS':v('p-pct-sms'),'% Paper-Plastic':v('p-pct-paper'),
+    'Container Weight body+lid+portafiltro (kg)':v('p-cont-kg'),
+    'Container EF (kg CO2e/kg)':v('p-cont-ef'),
+    'Container Validated Lifetime (cycles)':v('p-cont-life'),
+    'Filter Type':sel('p-filter-type'),'Filter Weight (kg)':v('p-filter-kg'),
+    'Filter EF (kg CO2e/kg)':v('p-filter-ef'),'Filter Lifetime (cycles)':v('p-filter-life'),
+    'Flexible Single Weight (g)':v('p-flex-single'),'Flexible Double Weight (g)':v('p-flex-double'),
+    '% Double Barrier':v('p-pct-double'),'Container WD Electricity (kWh)':v('p-cont-elec'),
+    'Cycle Policy':sel('r-policy'),'% 18min (if risk-diff)':v('r-pct18'),
+    'Sets Produced/month':v('st-produced'),'Sets Expired/month':v('st-expired'),
+    'Expiry Rate (%)':v('st-rate'),
+    'Supplier Distance (km)':v('t-dist'),'Monthly Consumables (kg)':v('t-weight'),
+    'Delivery Trips/week':v('t-trips'),'Delivery Distance avg (km)':v('t-trip-dist'),
+    'CO2e/cycle (kg)':txt('r-co2-cycle'),'CO2e/set (kg)':txt('r-co2-set'),
+    'Confidence Level':txt('r-confidence'),
+    'Tool Version':'SterilPrint v1.2',
+    'Submission Notes':v('submit-notes')
+  };
+}
+function submitData(){
+  var btn=document.getElementById('btn-submit');
+  var status=document.getElementById('submit-status');
+  var data=collectData();
+  if(!data['Pilot Name']||!data['Country']){
+    status.className='submit-status submit-err';
+    status.textContent='Please complete Setup first: name and country are required.';
+    status.style.display='block';
+    return;
+  }
+  btn.disabled=true;
+  btn.textContent='Sending...';
+  status.style.display='none';
+  fetch(GS_ENDPOINT,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data),
+    mode:'no-cors'
+  }).then(function(){
+    status.className='submit-status submit-ok';
+    status.textContent='Data submitted successfully — thank you, '+data['Pilot Name']+'! Your results are now in the shared pilot database.';
+    status.style.display='block';
+    btn.textContent='Submitted';
+    btn.style.background='linear-gradient(135deg,#059669,#047857)';
+  }).catch(function(err){
+    status.className='submit-status submit-err';
+    status.textContent='Connection error — please email results to Cinthia Vera Fuentes directly.';
+    status.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Submit my pilot data';
+  });
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────
