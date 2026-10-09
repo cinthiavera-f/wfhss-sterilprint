@@ -1047,7 +1047,7 @@ function sp(code,title,la,va,lb,vb,meaning,unit,col){
   return '<div class="sc-pair"><div class="sc-pair-top"><span class="sc-pid">'+code+'</span><span class="sc-tag '+(cm[col]||'sw')+'">'+code+'</span></div><div class="sc-pq">'+title+'</div><div class="sc-cmp"><div class="sc-side sc-sa"><div class="sc-lbl">'+la+'</div><div class="sc-val">'+va+'</div><div style="font-size:8px;color:var(--slate-lt)">'+unit+'</div></div><div class="sc-ac"><div class="sc-delta">'+(better?'\u25bc':'\u25b2')+'</div><div class="sc-pct">'+pct+'%</div></div><div class="sc-side sc-sb"><div class="sc-lbl">'+lb+'</div><div class="sc-val '+(better?'better':'')+'">'+vb+'</div><div style="font-size:8px;color:var(--slate-lt)">'+unit+'</div></div></div><div class="sc-mean">'+meaning+'</div></div>';
 }
 
-var GS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyEaFEvOV94aeLXQvkbBDh-omYXREBplYd5Fd05aaLCaCc0txgO2n2Q3MpnOBYfNtqQLQ/exec';
+var GS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzQJiVZEQqKvdteaoiLfd_UQjb20iHY9uCvemGdglpSK5hbZKEfV4jHBftFdcFv3u8B0A/exec';
 function collectData(){
   var v2=function(id){var el=document.getElementById(id);return el?(el.value||''):'';};
   var sel=function(id){var el=document.getElementById(id);return el?el.value:'';};
@@ -1101,7 +1101,7 @@ function submitData(){
 }
 
 var surveyData={};
-var GS_SURVEY='https://script.google.com/macros/s/AKfycbyEaFEvOV94aeLXQvkbBDh-omYXREBplYd5Fd05aaLCaCc0txgO2n2Q3MpnOBYfNtqQLQ/exec';
+var GS_SURVEY='https://script.google.com/macros/s/AKfycbzQJiVZEQqKvdteaoiLfd_UQjb20iHY9uCvemGdglpSK5hbZKEfV4jHBftFdcFv3u8B0A/exec';
 function selectLikert(btn,key,val){
   var row=btn.parentElement;
   row.querySelectorAll('.likert-btn').forEach(function(b){b.classList.remove('sel');});
