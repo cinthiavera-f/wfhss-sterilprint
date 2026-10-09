@@ -262,6 +262,36 @@ body.simple-mode .expert-note{display:none}
 /* ac-list explicit font */
 .ac-list{margin:0;padding:0 0 0 14px;font-family:'IBM Plex Sans',sans-serif;}
 .ac-list li{font-size:11px;color:var(--slate);line-height:1.5;margin-bottom:4px;font-family:'IBM Plex Sans',sans-serif;}
+
+/* S4 SURVEY */
+#s4{background:var(--bg)}
+.survey-wrap{max-width:680px;margin:0 auto;padding:28px 24px 60px}
+.survey-header{background:linear-gradient(135deg,var(--navy),#253F6E);border-radius:12px;padding:24px 28px;margin-bottom:28px}
+.survey-header-tag{font-size:10px;font-weight:700;color:var(--teal);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.survey-header-h{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
+.survey-header-sub{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6}
+.survey-block{background:var(--white);border-radius:10px;border:1px solid var(--border);padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.survey-block-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(30,143,143,.15)}
+.survey-q{margin-bottom:18px}
+.survey-q:last-child{margin-bottom:0}
+.survey-q-text{font-size:12px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.5}
+.survey-q-code{font-size:9px;font-weight:700;color:var(--slate-lt);font-family:var(--mono);margin-bottom:4px}
+.likert-row{display:flex;gap:6px;align-items:center}
+.likert-btn{flex:1;padding:7px 4px;border:1.5px solid var(--border);border-radius:6px;background:var(--bg);font-size:11px;font-weight:600;color:var(--slate);cursor:pointer;transition:all .15s;text-align:center;font-family:inherit}
+.likert-btn:hover{border-color:var(--teal);color:var(--teal)}
+.likert-btn.sel{background:var(--teal);border-color:var(--teal);color:#fff}
+.likert-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--slate-lt);margin-top:4px;padding:0 2px}
+.survey-textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:12px;color:var(--text);background:var(--bg);outline:none;resize:vertical;min-height:80px;transition:border-color .15s;line-height:1.5}
+.survey-textarea:focus{border-color:var(--teal);background:#fff}
+.survey-textarea::placeholder{color:var(--slate-lt)}
+.survey-france-block{display:none;background:rgba(180,83,9,.06);border:1px solid rgba(180,83,9,.2);border-radius:8px;padding:14px;margin-top:12px}
+.survey-france-tag{font-size:9px;font-weight:700;color:var(--r);letter-spacing:.5px;margin-bottom:10px}
+.btn-survey-submit{width:100%;padding:13px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;box-shadow:0 2px 8px rgba(30,143,143,.25)}
+.btn-survey-submit:hover{background:var(--teal2);transform:translateY(-1px)}
+.btn-survey-submit:disabled{background:#ccc;cursor:not-allowed;transform:none}
+.survey-submit-status{margin-top:12px;padding:12px;border-radius:8px;font-size:12px;text-align:center;display:none}
+.survey-ok{background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.3);color:var(--p)}
+.survey-err{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.3);color:var(--st)}
 </style>
 </head>
 <body>
@@ -278,6 +308,7 @@ body.simple-mode .expert-note{display:none}
     <button class="hn" id="hn-s1" onclick="goTo('s1')" data-en="Setup" data-es="Configurar">Setup</button>
     <button class="hn" id="hn-s2" onclick="goTo('s2')" data-en="Data" data-es="Datos">Data</button>
     <button class="hn" id="hn-s3" onclick="goTo('s3')" data-en="Results" data-es="Resultados">Results</button>
+    <button class="hn" id="hn-s4" onclick="goTo('s4')" data-en="Feedback" data-es="Evaluación">Feedback</button>
   </nav>
   <div class="hdr-right">
     <div class="mode-tog" id="mode-btn" onclick="toggleMode()" title="Toggle expert/simple mode">
@@ -408,7 +439,7 @@ body.simple-mode .expert-note{display:none}
         <div class="cpill" id="cpill"></div>
       </div>
       <div class="fr-setup" id="fr-setup">
-        <div class="fr-setup-title">France — Unité d'Oeuvre (SF2S barème)</div>
+        <div class="fr-setup-title" data-en="France — Unité d'Oeuvre (SF2S barème)" data-es="Francia — Unité d'Oeuvre (barème SF2S)">France — Unité d'Oeuvre (SF2S barème)</div>
         <div class="fl" style="color:rgba(255,255,255,.5)">Total UO produced per year <span class="req-tag">required for France</span></div>
         <input class="fi" id="u-uo" type="number" placeholder="e.g. 280000">
       </div>
@@ -503,6 +534,10 @@ body.simple-mode .expert-note{display:none}
               <div class="ir"><div><div class="iname">Container EF — manufacturing <span class="tc t2c">T2</span></div><div class="expert-note">ecoinvent 3.10 proxy — aluminium alloy: ~8.2 kg CO&#8322;e/kg</div></div><div class="ivw"><input class="inum" id="p-cont-ef" type="number" value="8.2" step="0.1" oninput="calc()"><span class="iunit">kg CO&#8322;e/kg</span></div></div>
               <div class="ir"><div><div class="iname">Validated lifetime <span class="tc t1c">T1</span></div><div class="expert-note">&#9888; MANUFACTURER CERTIFICATE ONLY. France ref: ~1000 cycles.</div></div><div class="ivw"><input class="inum" id="p-cont-life" type="number" value="1000" step="100" oninput="calc()"><span class="iunit">cycles</span></div></div>
               <div class="ir"><div><div class="iname">Container cleaning — electricity <span class="tc t2c">T2</span></div><div class="expert-note">Bonn: ~2.2 kWh/container</div></div><div class="ivw"><input class="inum" id="p-cont-elec" type="number" value="2.2" step="0.1" oninput="calc()"><span class="iunit">kWh/cycle</span></div></div>
+              <div class="ir" style="margin-top:8px;padding:8px;background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.2);border-radius:6px">
+                <div><div class="iname">Inner liner / Vlies weight per set <span class="sc-tag sp2">P1-V</span> <span class="tc t1c">T1</span></div><div class="expert-note">Non-woven inner liner used inside rigid container (single-use, discarded each cycle). Weigh one sheet or divide pack net weight by number of sheets. EF: same SMS PP 3.8 kg CO₂e/kg. Bonn: weight pending Rainer confirmation. Enter 0 if no inner liner used.</div></div>
+                <div class="ivw"><input class="inum" id="p-vlies" type="number" value="" step="0.5" placeholder="e.g. 60" oninput="calc()"><span class="iunit">g/set</span></div>
+              </div>
               <div class="bkv-box" id="bkv-box"><div class="bkv-num" id="bkv-num">—</div><div class="bkv-sub" id="bkv-sub">Enter container data to calculate breakeven</div></div>
             </div>
           </div>
@@ -535,7 +570,7 @@ body.simple-mode .expert-note{display:none}
           <div class="proc-ban pb-t"><span class="pb-icon">&#128666;</span><div><div class="pb-h">Procurement — Supply Transport T1</div><div class="pb-sub">Transport CO&#8322;e of consumables delivered to CSSD · DEFRA 2025</div></div></div>
           <div class="isec"><div class="isec-h"><span class="isec-ht">Supply transport emissions <span class="sc-tag st2">T1</span></span><span class="isec-co2" id="sv-t">—</span></div>
             <div class="isec-body">
-              <div class="ir"><div><div class="iname">Distance — main supplier to CSSD <span class="tc t1c">T1</span></div><div class="expert-note">Bonn: Hamburg 84 km</div></div><div class="ivw"><input class="inum" id="t-dist" type="number" value="84" step="1" oninput="calc()"><span class="iunit">km</span></div></div>
+              <div class="ir"><div><div class="iname">Delivery route description <span class="tc t1c">T1</span></div><div class="expert-note">Describe the actual route, e.g. “Distributor Berlin → CSSD” or “Dr. Weigert Hamburg → CSSD”. Helps document whether delivery is via distributor or direct from manufacturer.</div></div><div class="ivw" style="width:220px"><input class="fi" id="t-route" type="text" placeholder="e.g. Distributor → CSSD" style="width:100%;padding:5px 7px;border:1.5px solid var(--border);border-radius:5px;font-size:11px;color:var(--text);background:var(--bg);outline:none" value="Distributor → CSSD Bonn"></div></div><div class="ir"><div><div class="iname">Distance — last delivery point to CSSD <span class="tc t1c">T1</span></div><div class="expert-note">If via distributor: distance distributor → CSSD. If direct from manufacturer: distance factory → CSSD. Bonn via distributor: 84 km.</div></div><div class="ivw"><input class="inum" id="t-dist" type="number" value="84" step="1" oninput="calc()"><span class="iunit">km</span></div></div>
               <div class="ir"><div><div class="iname">Monthly weight of consumables <span class="tc t1c">T1</span></div></div><div class="ivw"><input class="inum" id="t-weight" type="number" value="50" step="5" oninput="calc()"><span class="iunit">kg/month</span></div></div>
               <div class="ir"><div><div class="iname">Transport EF — road HGV <span class="tc t2c">T2</span></div><div class="expert-note">DEFRA 2025</div></div><div class="ivw"><input class="inum" id="t-ef" type="number" value="0.089" step="0.001" oninput="calc()"><span class="iunit">kg CO&#8322;e/t&#183;km</span></div></div>
               <div class="ir"><div><div class="iname">CSSD delivery trips / week <span class="tc t1c">T1</span></div><div class="expert-note">Bonn: 32 trips/week · avg 1.6 km</div></div><div class="ivw"><input class="inum" id="pr-trips" type="number" value="32" step="1" oninput="calc()"><span class="iunit">trips/wk</span></div></div>
@@ -620,6 +655,212 @@ body.simple-mode .expert-note{display:none}
   </div>
 </div>
 
+
+<div class="screen" id="s4">
+  <div class="survey-wrap">
+    <div class="survey-header">
+      <div class="survey-header-tag" data-en="WFHSS SterilPrint · Phase 1 Pilot 2026" data-es="WFHSS SterilPrint · Fase 1 Piloto 2026">WFHSS SterilPrint · Phase 1 Pilot 2026</div>
+      <div class="survey-header-h" data-en="Tool evaluation" data-es="Evaluación de la herramienta">Tool evaluation</div>
+      <div class="survey-header-sub" data-en="12 questions · ~4 minutes · Your responses directly improve the tool for all WFHSS professionals.<br>Scale: 1 = Strongly disagree — 5 = Strongly agree" data-es="12 preguntas · ~4 minutos · Tus respuestas mejoran directamente la herramienta para todos los profesionales WFHSS.<br>Escala: 1 = Totalmente en desacuerdo — 5 = Totalmente de acuerdo">12 questions · ~4 minutes · Your responses directly improve the tool for all WFHSS professionals.<br>Scale: 1 = Strongly disagree — 5 = Strongly agree</div>
+    </div>
+
+    <div class="survey-block">
+      <div class="survey-block-title" data-en="Block A — Usability" data-es="Bloque A — Usabilidad">Block A — Usability</div>
+      <div class="survey-q">
+        <div class="survey-q-code">A1</div>
+        <div class="survey-q-text" data-en="I was able to navigate between tabs (Setup, Data, Results) without difficulty." data-es="Pude navegar entre las pestañas (Setup, Data, Results) sin dificultad.">I was able to navigate between tabs (Setup, Data, Results) without difficulty.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'a1',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a1',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a1',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a1',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a1',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">A2</div>
+        <div class="survey-q-text" data-en="The input fields are clear — I knew what data to enter in each one." data-es="Los campos de entrada son claros — supe qué dato ingresar en cada uno.">The input fields are clear — I knew what data to enter in each one.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'a2',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a2',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a2',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a2',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a2',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">A3</div>
+        <div class="survey-q-text" data-en="The results are presented in an understandable way, without prior LCA training." data-es="Los resultados se presentan de forma comprensible, sin necesidad de formación previa en ACV/LCA.">The results are presented in an understandable way, without prior LCA training.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'a3',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a3',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a3',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a3',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'a3',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+    </div>
+
+    <div class="survey-block">
+      <div class="survey-block-title" data-en="Block B — Conceptual understanding" data-es="Bloque B — Comprensión conceptual">Block B — Conceptual understanding</div>
+      <div class="survey-q">
+        <div class="survey-q-code">B1</div>
+        <div class="survey-q-text" data-en="After using the tool, I can identify which process contributes most to CO₂e in my CSSD." data-es="Después de usar la herramienta, identifico cuál es el proceso que más contribuye al CO₂e en mi Central de Reprocesamiento de Dispositivos Médicos.">After using the tool, I can identify which process contributes most to CO₂e in my CSSD.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'b1',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b1',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b1',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b1',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b1',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">B2</div>
+        <div class="survey-q-text" data-en="I understand the difference between physical inventory results (kWh, litres) and CO₂e results, and know when each is more useful." data-es="Entiendo la diferencia entre los resultados de inventario físico (kWh, litros) y el resultado en CO₂e, y sé cuándo cada uno es más útil.">I understand the difference between physical inventory results (kWh, litres) and CO₂e results, and know when each is more useful.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'b2',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b2',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b2',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b2',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b2',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">B3</div>
+        <div class="survey-q-text" data-en="I know under what conditions I can use these results to make decisions in my CSSD." data-es="Sé en qué condiciones puedo usar estos resultados para tomar decisiones en mi Central de Reprocesamiento de Dispositivos Médicos.">I know under what conditions I can use these results to make decisions in my CSSD.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'b3',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b3',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b3',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b3',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b3',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-france-block" id="survey-b4">
+        <div class="survey-france-tag" data-en="France — SF2S barème" data-es="Francia — SF2S barème">France — SF2S barème</div>
+        <div class="survey-q">
+        <div class="survey-q-code">B4</div>
+        <div class="survey-q-text" data-en="The CO₂e per Unité d’Œuvre result provided by the tool is useful and applicable in my CSSD work context." data-es="El resultado en CO₂e por Unité d’Œuvre que entrega la herramienta es útil y aplicable en el contexto de trabajo de mi CSSD.">The CO₂e per Unité d’Œuvre result provided by the tool is useful and applicable in my CSSD work context.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'b4',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b4',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b4',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b4',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'b4',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      </div>
+    </div>
+
+    <div class="survey-block">
+      <div class="survey-block-title" data-en="Block C — Value for decision-making" data-es="Bloque C — Valor para la toma de decisiones">Block C — Value for decision-making</div>
+      <div class="survey-q">
+        <div class="survey-q-code">C1</div>
+        <div class="survey-q-text" data-en="The results show me where the critical environmental impact hotspots are in my CSSD." data-es="Los resultados me muestran dónde están los puntos críticos de impacto ambiental en mi Central de Reprocesamiento de Dispositivos Médicos.">The results show me where the critical environmental impact hotspots are in my CSSD.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'c1',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c1',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c1',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c1',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c1',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">C2</div>
+        <div class="survey-q-text" data-en="I can identify at least one concrete action I could implement in my CSSD based on these results." data-es="Identifico al menos una acción concreta que podría implementar en mi CSSD a partir de estos resultados.">I can identify at least one concrete action I could implement in my CSSD based on these results.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'c2',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c2',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c2',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c2',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c2',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">C3</div>
+        <div class="survey-q-text" data-en="I would use this tool regularly if it were available at my institution." data-es="Usaría esta herramienta regularmente si estuviera disponible en mi institución.">I would use this tool regularly if it were available at my institution.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'c3',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c3',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c3',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c3',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'c3',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+    </div>
+
+    <div class="survey-block">
+      <div class="survey-block-title" data-en="Block D — Diagnosis — what is missing or could improve" data-es="Bloque D — Diagnóstico — qué falta o puede mejorar">Block D — Diagnosis — what is missing or could improve</div>
+      <div class="survey-q">
+        <div class="survey-q-code">D1</div>
+        <div class="survey-q-text" data-en="The data I needed to complete the tool was available in my CSSD without additional searching." data-es="Los datos que necesité para completar la herramienta estaban disponibles en mi CSSD sin búsqueda adicional.">The data I needed to complete the tool was available in my CSSD without additional searching.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'d1',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d1',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d1',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d1',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d1',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">D2</div>
+        <div class="survey-q-text" data-en="The expert / simple mode adapted well to my level of knowledge." data-es="El modo experto / modo simple se adaptó bien a mi nivel de conocimiento.">The expert / simple mode adapted well to my level of knowledge.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'d2',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d2',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d2',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d2',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d2',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+      <div class="survey-q">
+        <div class="survey-q-code">D3</div>
+        <div class="survey-q-text" data-en="The tool covers the most relevant processes of my CSSD." data-es="La herramienta cubre los procesos más relevantes de mi Central de Reprocesamiento de Dispositivos Médicos.">The tool covers the most relevant processes of my CSSD.</div>
+        <div class="likert-row">
+          <button class="likert-btn" onclick="selectLikert(this,'d3',1)">1</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d3',2)">2</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d3',3)">3</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d3',4)">4</button>
+          <button class="likert-btn" onclick="selectLikert(this,'d3',5)">5</button>
+        </div>
+        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+      </div>
+    </div>
+
+    <div class="survey-block">
+      <div class="survey-block-title" data-en="Block E — Your direct feedback" data-es="Bloque E — Tu opinión directa">Block E — Your direct feedback</div>
+      <div class="survey-q">
+        <div class="survey-q-code">E1</div>
+        <div class="survey-q-text" data-en="What was most useful or what did you understand best when using SterilPrint?" data-es="¿Qué fue lo más útil o lo que mejor entendiste al usar SterilPrint?">What was most useful or what did you understand best when using SterilPrint?</div>
+        <textarea class="survey-textarea" id="sq-e1" placeholder="Write your answer here..." data-en="Write your answer here..." data-es="Escribe tu respuesta aquí..."></textarea>
+      </div>
+      <div class="survey-q" style="margin-bottom:0">
+        <div class="survey-q-code">E2</div>
+        <div class="survey-q-text" data-en="What would you change, add or remove to make the tool more useful in your daily practice?" data-es="¿Qué cambiarías, agregarías o eliminarías para que la herramienta sea más útil en tu práctica diaria?">What would you change, add or remove to make the tool more useful in your daily practice?</div>
+        <textarea class="survey-textarea" id="sq-e2" placeholder="Write your answer here..." data-en="Write your answer here..." data-es="Escribe tu respuesta aquí..."></textarea>
+      </div>
+    </div>
+
+    <button class="btn-survey-submit" id="btn-survey" onclick="submitSurvey()" data-en="Submit feedback →" data-es="Enviar evaluación →">Submit feedback →</button>
+    <div class="survey-submit-status" id="survey-status"></div>
+    <div style="font-size:10px;color:var(--slate-lt);text-align:center;margin-top:16px;line-height:1.6">
+      Your responses are sent to the WFHSS SterilPrint team · No personal data is shared · Based on SUS (Brooke 1996) · TAM (Davis 1989) · Health-ITUES 2023
+    </div>
+  </div>
+</div>
+
 </div><!-- /app -->
 <script>
 const EF_DET=0.0014,EF_ACT=0.0018,EF_WATER=0.000171,EF_VAN=0.190;
@@ -630,6 +871,7 @@ function goTo(id){
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.hn').forEach(function(b){b.classList.remove('active');});
   var hn=document.getElementById('hn-'+id); if(hn) hn.classList.add('active');
+  if(id==='s4'){var b4=document.getElementById('survey-b4');if(b4)b4.style.display=IS_FRANCE?'block':'none';}
   if(id==='s3'){
     buildResults();
     var sn=document.getElementById('submit-name-confirm');
@@ -723,8 +965,9 @@ function calc(){
   var efFlex=pctSMS>0&&pctPaper>0?(pctSMS/(pctSMS+pctPaper))*v('p-ef-sms')+(pctPaper/(pctSMS+pctPaper))*v('p-ef-paper'):pctPaper>0?v('p-ef-paper'):v('p-ef-sms');
   var cMfg=v('p-cont-kg')*v('p-cont-ef'),cLife=Math.max(1,v('p-cont-life'));
   var cCO2perSet=(cMfg/cLife)+(v('p-cont-elec')*ef),flexCO2perSet=wFlex*efFlex;
-  var pCO2=(pctCont*cCO2perSet+((pctSMS+pctPaper)*flexCO2perSet));
-  document.getElementById('pco2-p').textContent=pCO2.toFixed(3)+' kg CO\u2082e/set';
+  var vliesG=v('p-vlies'),vliesCO2=(vliesG/1000)*3.8;
+  var pCO2=(pctCont*(cCO2perSet+vliesCO2)+((pctSMS+pctPaper)*flexCO2perSet));
+  document.getElementById('pco2-p').textContent=pCO2.toFixed(3)+' kg CO\u2082e/set'+(vliesG>0?' (incl. liner)':'');
   document.getElementById('sv-p').textContent=pCO2.toFixed(3)+' kg CO\u2082e/set';
   if(flexCO2perSet>cCO2perSet&&cMfg>0){
     var bk=Math.ceil(cMfg/(flexCO2perSet-cCO2perSet));
@@ -743,7 +986,7 @@ function calc(){
   var grand=wTot+sTot+pCO2,perSet=grand/Math.max(1,v('s-trays'));
   document.getElementById('foot-tot').textContent=grand.toFixed(2);
   if(IS_FRANCE&&USER_UO>0){var ac=grand*v('s-cycles')*v('w-days')*12;document.getElementById('uo-result').textContent=(ac/USER_UO).toFixed(4);}
-  window._R={wTot,sTot,pCO2,grand,perSet,ef,pct18,wE,wW,wD,wA,sCO2E,sW,sBD,sElecEff,
+  window._R={wTot,sTot,pCO2,grand,perSet,ef,pct18,wE,wW,wD,wA,sCO2E,sW,sBD,sElecEff,vliesCO2,
     wElecKwh:v('w-elec')*v('w-cycles'),sElecKwh:sElecEff,wWaterL:v('w-water'),sWaterL:v('s-water')+v('s-vac'),
     wFlex,efFlex,pctCont,pctSMS,pctPaper,cMfg,cCO2perSet,flexCO2perSet,expRate,expWaste,co2PerSet,
     trays:v('s-trays'),traysMax:v('s-trays-max'),sElec:v('s-elec'),sElec18:v('s-elec18'),
@@ -856,6 +1099,56 @@ function submitData(){
     status.style.display='block';btn.disabled=false;btn.textContent='Submit my pilot data →';
   });
 }
+
+var surveyData={};
+var GS_SURVEY='https://script.google.com/macros/s/AKfycbyEaFEvOV94aeLXQvkbBDh-omYXREBplYd5Fd05aaLCaCc0txgO2n2Q3MpnOBYfNtqQLQ/exec';
+function selectLikert(btn,key,val){
+  var row=btn.parentElement;
+  row.querySelectorAll('.likert-btn').forEach(function(b){b.classList.remove('sel');});
+  btn.classList.add('sel');
+  surveyData[key]=val;
+  updateSurveyProgress();
+}
+function updateSurveyProgress(){
+  var required=['a1','a2','a3','b1','b2','b3','c1','c2','c3','d1','d2','d3'];
+  var filled=required.filter(function(k){return surveyData[k];}).length;
+  document.getElementById('survey-prog')&&(document.getElementById('survey-prog').style.width=Math.round(filled/required.length*100)+'%');
+}
+function submitSurvey(){
+  var required=['a1','a2','a3','b1','b2','b3','c1','c2','c3','d1','d2','d3'];
+  var missing=required.filter(function(k){return !surveyData[k];});
+  var btn=document.getElementById('btn-survey');
+  var status=document.getElementById('survey-status');
+  if(missing.length>0){
+    status.className='survey-submit-status survey-err';
+    status.textContent='Please answer all required questions ('+missing.join(', ').toUpperCase()+') before submitting.';
+    status.style.display='block';return;
+  }
+  var payload=Object.assign({},surveyData,{
+    'Timestamp':new Date().toISOString(),
+    'CSSD':USER_HOSP||'',
+    'Country':USER_COUNTRY||'',
+    'Cluster':USER_CLUSTER||'',
+    'Tool Version':'SterilPrint v1.2',
+    'Survey Type':'Usability Feedback',
+    'E1':document.getElementById('sq-e1').value.trim(),
+    'E2':document.getElementById('sq-e2').value.trim(),
+    'B4':surveyData['b4']||'N/A'
+  });
+  btn.disabled=true;btn.textContent='Enviando...';status.style.display='none';
+  fetch(GS_SURVEY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),mode:'no-cors'})
+  .then(function(){
+    status.className='survey-submit-status survey-ok';
+    status.textContent='\u2713 Evaluaci\u00f3n enviada. Muchas gracias — tu opini\u00f3n ayuda a mejorar SterilPrint para todos.';
+    status.style.display='block';
+    btn.textContent='\u2713 Enviado';btn.style.background='linear-gradient(135deg,#059669,#047857)';
+  }).catch(function(){
+    status.className='survey-submit-status survey-err';
+    status.textContent='Error de conexi\u00f3n. Env\u00eda tus respuestas directamente a Cinthia Vera Fuentes.';
+    status.style.display='block';btn.disabled=false;btn.textContent='Enviar evaluaci\u00f3n \u2192';
+  });
+}
+
 document.addEventListener('DOMContentLoaded',function(){showP('wash');calc();});
 </script>
 </body>
