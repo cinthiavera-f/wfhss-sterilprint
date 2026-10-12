@@ -26,9 +26,9 @@ html,body{height:100%;font-family:'IBM Plex Sans',sans-serif;background:var(--bg
 .hn{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.4);border:none;background:none;font-family:'IBM Plex Sans',sans-serif;transition:all .15s}
 .hn.active,.hn:hover{color:#fff;background:rgba(255,255,255,.1)}
 .hdr-right{display:flex;align-items:center;gap:8px}
-.lang-tog{display:flex;border:1px solid rgba(255,255,255,.2);border-radius:4px;overflow:hidden}
-.lb{padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.4);border:none;background:none;font-family:'IBM Plex Sans',sans-serif}
-.lb.active{background:rgba(255,255,255,.12);color:#fff}
+
+
+
 .mode-tog{display:flex;align-items:center;gap:5px;cursor:pointer;padding:3px 8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:4px}
 .mode-tog span{font-size:10px;color:rgba(255,255,255,.45);font-weight:600}
 .mode-tog.expert span{color:var(--teal)}
@@ -311,6 +311,10 @@ body.simple-mode .expert-note{display:none}
 /* Pilot mode indicator */
 .pilot-badge{display:none;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:#A78BFA;font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.5px}
 .pilot-badge.on{display:inline-block}
+
+/* Equivalence lines under KPIs */
+.rsi-equiv{font-size:8.5px;color:rgba(255,255,255,0.32);margin-top:3px;line-height:1.4;font-style:italic}
+.rsi-equiv span{color:rgba(255,255,255,0.5);font-style:normal}
 </style>
 </head>
 <body>
@@ -323,20 +327,17 @@ body.simple-mode .expert-note{display:none}
     <span class="hdr-site" id="hdr-site">SterilPrint · Belgrade 2026</span>
   </div>
   <nav class="hdr-nav">
-    <button class="hn active" id="hn-s0" onclick="goTo('s0')" data-en="About" data-es="Inicio">About</button>
-    <button class="hn" id="hn-s1" onclick="goTo('s1')" data-en="Setup" data-es="Configurar">Setup</button>
-    <button class="hn" id="hn-s2" onclick="goTo('s2')" data-en="Data" data-es="Datos">Data</button>
-    <button class="hn" id="hn-s3" onclick="goTo('s3')" data-en="Results" data-es="Resultados">Results</button>
-    <button class="hn" id="hn-s4" onclick="goTo('s4')" data-en="Feedback" data-es="Evaluación">Feedback</button>
+    <button class="hn active" id="hn-s0" onclick="goTo('s0')" data-en="About">About</button>
+    <button class="hn" id="hn-s1" onclick="goTo('s1')" data-en="Setup">Setup</button>
+    <button class="hn" id="hn-s2" onclick="goTo('s2')" data-en="Data">Data</button>
+    <button class="hn" id="hn-s3" onclick="goTo('s3')" data-en="Results">Results</button>
+    <button class="hn" id="hn-s4" onclick="goTo('s4')" data-en="Feedback">Feedback</button>
   </nav>
   <div class="hdr-right">
     <div id="mode-btn" style="display:none" onclick="toggleMode()">
       <span id="mode-label">Expert</span>
     </div>
-    <div class="lang-tog">
-      <button class="lb active" id="lb-en" onclick="setLang('en')">EN</button>
-      <button class="lb" id="lb-es" onclick="setLang('es')">ES</button>
-    </div>
+
   </div>
     <div class="pilot-badge" id="pilot-badge">PILOT MODE</div>
   </div>
@@ -351,23 +352,23 @@ body.simple-mode .expert-note{display:none}
     <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(27,58,107,0.92) 0%,rgba(27,58,107,0.88) 50%,rgba(27,58,107,0.55) 65%,rgba(27,58,107,0.15) 78%,rgba(27,58,107,0.0) 88%);"></div>
     <div style="position:relative;z-index:2;max-width:860px;margin:0 auto;padding:36px 28px 32px">
       <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(58,143,143,.2);border:1px solid rgba(58,143,143,.4);color:#7DD3D3;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.8px;text-transform:uppercase">&#127757; WFHSS Green &amp; Innovation · ISO 14044 · Belgrade 2026</div>
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:5px" data-en="WFHSS SterilPrint" data-es="WFHSS SterilPrint">WFHSS SterilPrint</div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:5px" data-en="WFHSS SterilPrint">WFHSS SterilPrint</div>
       <h1 style="font-size:clamp(20px,2.8vw,32px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:10px">Every choice shapes tomorrow.<br><span style="color:#7DD3D3">Every action</span> protects life.</h1>
-      <p style="font-size:12px;color:rgba(255,255,255,.88);max-width:480px;line-height:1.7;margin-bottom:14px" data-en="Every reprocessing cycle consumes energy and water and emits CO₂. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost." data-es="Cada ciclo de reprocesamiento consume energía y agua y emite CO₂. Esta herramienta ayuda a los managers de CSSD a medir ese impacto — e identificar qué pueden cambiar hoy, sin costo.">Every reprocessing cycle consumes energy and water and emits CO&#8322;. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost.</p>
-      <div style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:7px;padding:9px 12px;font-size:11px;color:#FDE68A;line-height:1.5;max-width:520px"><strong data-en="&#9888; Pilot v1.2 — Belgrade 2026." data-es="&#9888; Piloto v1.2 — Belgrado 2026.">&#9888; Pilot v1.2 — Belgrade 2026.</strong> <span data-en="Results for decision support and professional learning only. ISO 14044 §4.2.3.3." data-es="Resultados solo para apoyo de decisiones y aprendizaje profesional. ISO 14044 §4.2.3.3.">Results for decision support and professional learning only. ISO 14044 §4.2.3.3.</span></div>
+      <p style="font-size:12px;color:rgba(255,255,255,.88);max-width:480px;line-height:1.7;margin-bottom:14px" data-en="Every reprocessing cycle consumes energy and water and emits CO₂. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost.">Every reprocessing cycle consumes energy and water and emits CO&#8322;. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost.</p>
+      <div style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:7px;padding:9px 12px;font-size:11px;color:#FDE68A;line-height:1.5;max-width:520px"><strong data-en="&#9888; Pilot v1.2 — Belgrade 2026.">&#9888; Pilot v1.2 — Belgrade 2026.</strong> <span data-en="Results for decision support and professional learning only. ISO 14044 §4.2.3.3.">Results for decision support and professional learning only. ISO 14044 §4.2.3.3.</span></div>
     </div>
   </div>
 
   <div class="about-body">
     <div class="ab4">
-      <div class="abl abl-p"><div class="abl-icon">&#127919;</div><div class="abl-t" data-en="Purpose" data-es="Propósito">Purpose</div><div class="abl-tx" data-en="Evidence-based environmental decisions for CSSD managers worldwide. Not for regulatory compliance — for operational awareness and professional learning." data-es="Decisiones ambientales basadas en evidencia para managers de CSSD. No para cumplimiento regulatorio — para conciencia operacional y aprendizaje profesional.">Evidence-based environmental decisions for CSSD managers worldwide. Not for regulatory compliance — for operational awareness and professional learning.</div></div>
-      <div class="abl abl-m"><div class="abl-icon">&#128300;</div><div class="abl-t" data-en="Methodology" data-es="Metodología">Methodology</div><div class="abl-tx">ISO 14067:2018 carbon footprint · ISO 14044:2006 principles · Gate-to-gate · Functional unit: one complete reprocessing cycle · EF: IEA 2026 + national authorities</div></div>
-      <div class="abl abl-d"><div class="abl-icon">&#128202;</div><div class="abl-t" data-en="Two output units" data-es="Dos unidades de salida">Two output units</div><div class="abl-tx">&#9312; kg CO&#8322;e / cycle — comparable across all WFHSS countries · &#9313; kg CO&#8322;e / set — internal use only · France &#127467;&#127479;: CO&#8322;e / Unité d'Oeuvre (SF2S barème)</div></div>
-      <div class="abl abl-g"><div class="abl-icon">&#127760;</div><div class="abl-t" data-en="5 global clusters" data-es="5 clusters globales">5 global clusters</div><div class="abl-tx">57 WFHSS member countries in 5 clusters by electricity emission intensity. Physical inventory (kWh, L) always directly comparable across all clusters.</div></div>
+      <div class="abl abl-p"><div class="abl-icon">&#127919;</div><div class="abl-t" data-en="Purpose">Purpose</div><div class="abl-tx" data-en="Evidence-based environmental decisions for CSSD managers worldwide. Not for regulatory compliance — for operational awareness and professional learning.">Evidence-based environmental decisions for CSSD managers worldwide. Not for regulatory compliance — for operational awareness and professional learning.</div></div>
+      <div class="abl abl-m"><div class="abl-icon">&#128300;</div><div class="abl-t" data-en="Methodology">Methodology</div><div class="abl-tx">ISO 14067:2018 carbon footprint · ISO 14044:2006 principles · Gate-to-gate · Functional unit: one complete reprocessing cycle · EF: IEA 2026 + national authorities</div></div>
+      <div class="abl abl-d"><div class="abl-icon">&#128202;</div><div class="abl-t" data-en="Two output units">Two output units</div><div class="abl-tx">&#9312; kg CO&#8322;e / cycle — comparable across all WFHSS countries · &#9313; kg CO&#8322;e / set — internal use only · France &#127467;&#127479;: CO&#8322;e / Unité d'Oeuvre (SF2S barème)</div></div>
+      <div class="abl abl-g"><div class="abl-icon">&#127760;</div><div class="abl-t" data-en="5 global clusters">5 global clusters</div><div class="abl-tx">57 WFHSS member countries in 5 clusters by electricity emission intensity. Physical inventory (kWh, L) always directly comparable across all clusters.</div></div>
     </div>
 
     <div class="sec-box">
-      <div class="sec-title" data-en="Why CO&#8322;e differs between countries — and why that is NOT inefficiency" data-es="Por qué el CO&#8322;e difiere entre países — y por qué eso NO es ineficiencia">Why CO&#8322;e differs between countries — and why that is NOT inefficiency</div>
+      <div class="sec-title" data-en="Why CO&#8322;e differs between countries — and why that is NOT inefficiency">Why CO&#8322;e differs between countries — and why that is NOT inefficiency</div>
       <div class="sec-lead">The electricity emission factor varies up to 47× between WFHSS member countries (Norway 0.017 → Indonesia 0.760 kg CO&#8322;e/kWh). The same autoclave consuming 15 kWh produces very different CO&#8322;e depending on the national grid. Physical inventory (kWh, L) is always directly comparable.</div>
       <div class="cluster-row">
         <div class="clu clu-a"><div class="clu-l">CLUSTER A</div><div class="clu-ef">&lt;0.10 kg CO&#8322;e/kWh</div><div class="clu-c2">Norway · France · Sweden · Switzerland</div></div>
@@ -388,9 +389,9 @@ body.simple-mode .expert-note{display:none}
     </div>
 
     <div class="ac3">
-      <div class="ac ac-can"><span class="ac-tag" data-en="&#10003; Can change — zero cost" data-es="&#10003; Puede cambiar — costo cero">&#10003; Can change — zero cost</span><ul class="ac-list"><li>Autoclave load → validated max (S2)</li><li>Sterile set FIFO rotation (ST1)</li><li>Detergent dose within IFU range (W1)</li><li>Bowie-Dick frequency documentation</li></ul></div>
-      <div class="ac ac-inf"><span class="ac-tag" data-en="~ Can influence — future" data-es="~ Puede influenciar — futuro">~ Can influence — future</span><ul class="ac-list"><li>WD model at next equipment purchase (W3)</li><li>Autoclave technology generation (S3)</li><li>Packaging type — if using flexible (P1)</li><li>Consumable supplier country of origin</li></ul></div>
-      <div class="ac ac-ctx"><span class="ac-tag" data-en="&#8505; Context — cannot change" data-es="&#8505; Contexto — no puede cambiar">&#8505; Context — cannot change</span><ul class="ac-list"><li>National electricity grid EF</li><li>Sterilization cycle policy (R1)</li><li>Hospital infrastructure</li></ul></div>
+      <div class="ac ac-can"><span class="ac-tag" data-en="&#10003; Can change — zero cost">&#10003; Can change — zero cost</span><ul class="ac-list"><li>Autoclave load → validated max (S2)</li><li>Sterile set FIFO rotation (ST1)</li><li>Detergent dose within IFU range (W1)</li><li>Bowie-Dick frequency documentation</li></ul></div>
+      <div class="ac ac-inf"><span class="ac-tag" data-en="~ Can influence — future">~ Can influence — future</span><ul class="ac-list"><li>WD model at next equipment purchase (W3)</li><li>Autoclave technology generation (S3)</li><li>Packaging type — if using flexible (P1)</li><li>Consumable supplier country of origin</li></ul></div>
+      <div class="ac ac-ctx"><span class="ac-tag" data-en="&#8505; Context — cannot change">&#8505; Context — cannot change</span><ul class="ac-list"><li>National electricity grid EF</li><li>Sterilization cycle policy (R1)</li><li>Hospital infrastructure</li></ul></div>
     </div>
 
     <div class="about-ack" style="background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-top:20px;">
@@ -400,12 +401,12 @@ body.simple-mode .expert-note{display:none}
         <div style="font-size:11px;color:var(--slate);flex:1;min-width:160px;">&#127467;&#127479; <strong>Catherine Guimier</strong> · Pilot site France · SF2S · Data collection Sept 2026</div>
         <div style="font-size:11px;color:var(--slate);flex:1;min-width:160px;">&#127464;&#127476; <strong>Mayra Ordóñez</strong> · Methodological validation · Colombia · RUMED</div>
       </div>
-      <div style="font-size:10px;color:#94A3B8;line-height:1.5;">ISO 14040:2006 · ISO 14044:2006 · ISO 14067:2018 · IEA Emissions Factors 2026 · Rizan et al. BJS 2022 (DOI: 10.1093/bjs/znab406)</div>
+      <div style="font-size:10px;color:#94A3B8;line-height:1.5;">ISO 14040:2006 · ISO 14044:2006 · ISO 14067:2018 · IEA Emissions Factors 2026 · ecoinvent 3.10 · DEFRA 2025</div>
     </div>
   </div>
 
   <div class="about-cta">
-    <button class="btn-cta" onclick="goTo('s1')" data-en="Calculate my CSSD footprint →" data-es="Calcular la huella de mi CSSD →">Calculate my CSSD footprint →</button>
+    <button class="btn-cta" onclick="goTo('s1')" data-en="Calculate my CSSD footprint →">Calculate my CSSD footprint →</button>
   </div>
 </div><!-- /s0 About screen -->
 
@@ -415,18 +416,18 @@ body.simple-mode .expert-note{display:none}
     <div class="demo-banner" id="demo-banner-s1">
       <div class="demo-banner-icon">🏛️</div>
       <div class="demo-banner-body">
-        <div class="demo-banner-title" data-en="📊 DEMO MODE — Bonn Pilot Data Loaded" data-es="📊 MODO DEMO — Datos piloto Bonn cargados">📊 DEMO MODE — Bonn Pilot Data Loaded</div>
-        <div class="demo-banner-sub" data-en="All fields pre-loaded with confirmed data from &lt;strong&gt;University Hospital Bonn&lt;/strong&gt; · &lt;strong&gt;Rainer Stens, DGSV&lt;/strong&gt; · Confirmed September 2026. Results are real — not simulated." data-es="Campos pre-cargados con datos confirmados de &lt;strong&gt;Hospital Universitario de Bonn&lt;/strong&gt; · &lt;strong&gt;Rainer Stens, DGSV&lt;/strong&gt; · Confirmado septiembre 2026. Los resultados son reales, no simulados.">All fields pre-loaded with confirmed data from <strong>University Hospital Bonn</strong> · <strong>Rainer Stens, DGSV</strong> · Confirmed September 2026. Results are real — not simulated.</div>
+        <div class="demo-banner-title" data-en="📊 DEMO MODE — Bonn Pilot Data Loaded">📊 DEMO MODE — Bonn Pilot Data Loaded</div>
+        <div class="demo-banner-sub" data-en="All fields pre-loaded with confirmed data from &lt;strong&gt;Bonn Community Hospital&lt;/strong&gt; · &lt;strong&gt;Rainer Stens, DGSV&lt;/strong&gt; · Confirmed September 2026. Results are real — not simulated.">All fields pre-loaded with confirmed data from <strong>Bonn Community Hospital</strong> · <strong>Rainer Stens, DGSV</strong> · Confirmed September 2026. Results are real — not simulated.</div>
       </div>
     </div>
-    <div class="setup-eye" data-en="CSSD Profile" data-es="Perfil de la CSSD">CSSD Profile</div>
-    <div class="setup-h" data-en="Tell us about your department" data-es="Cuéntanos sobre tu servicio">Tell us about your department</div>
+    <div class="setup-eye" data-en="CSSD Profile">CSSD Profile</div>
+    <div class="setup-h" data-en="Tell us about your department">Tell us about your department</div>
     <div class="scard">
       <div class="fg2">
         <div class="fg"><div class="fl">Your name <span class="req-tag">required</span></div><input class="fi" id="u-name" type="text" placeholder="Full name"></div>
         <div class="fg"><div class="fl">Your role</div><input class="fi" id="u-role" type="text" placeholder="e.g. CSSD Manager"></div>
       </div>
-      <div class="fg"><div class="fl">Hospital / institution <span class="req-tag">required</span></div><input class="fi" id="u-hospital" type="text" placeholder="e.g. University Hospital Bonn"></div>
+      <div class="fg"><div class="fl">Hospital / institution <span class="req-tag">required</span></div><input class="fi" id="u-hospital" type="text" placeholder="e.g. Bonn Community Hospital"></div>
       <div class="fg">
         <div class="fl">Country <span class="req-tag">required</span></div>
         <select class="fsel" id="u-country" onchange="updateEF()">
@@ -479,11 +480,11 @@ body.simple-mode .expert-note{display:none}
         </select>
       </div>
       <div class="demo-cta">
-        <div class="demo-cta-label" data-en="Demo ready — click below to see Bonn results instantly, or fill in your own data above" data-es="Demo lista — haz clic abajo para ver los resultados de Bonn al instante, o ingresa tus propios datos arriba">Demo ready — click below to see Bonn results instantly, or fill in your own data above</div>
-        <button class="btn-demo-clear" onclick="loadDemoAndStart()" data-en="📊 View Bonn pilot results →" data-es="📊 Ver resultados piloto Bonn →">📊 View Bonn pilot results →</button>
+        <div class="demo-cta-label" data-en="Demo ready — click below to see Bonn results instantly, or fill in your own data above">Demo ready — click below to see Bonn results instantly, or fill in your own data above</div>
+        <button class="btn-demo-clear" onclick="loadDemoAndStart()" data-en="📊 View Bonn pilot results →">📊 View Bonn pilot results →</button>
       </div>
-      <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.25);margin:8px 0" data-en="— or —" data-es="— o —">— or —</div>
-      <button class="btn-start" onclick="startTool()" data-en="Start my carbon analysis →" data-es="Iniciar mi análisis de carbono →">Start my carbon analysis →</button>
+      <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.25);margin:8px 0" data-en="— or —">— or —</div>
+      <button class="btn-start" onclick="startTool()" data-en="Start my carbon analysis →">Start my carbon analysis →</button>
     </div>
   </div>
 </div>
@@ -493,12 +494,12 @@ body.simple-mode .expert-note{display:none}
   <div class="data-wrap">
     <aside class="pnav">
       <div class="pnav-title">Processes</div>
-      <div class="pi active" id="pi-wash" onclick="showP('wash')"><div class="pi-row"><span class="pi-dot" style="background:var(--w)"></span><span class="pi-name" data-en="Washing" data-es="Lavado">Washing</span></div><div class="pi-co2" id="pco2-w">—</div></div>
-      <div class="pi" id="pi-ster" onclick="showP('ster')"><div class="pi-row"><span class="pi-dot" style="background:var(--s)"></span><span class="pi-name" data-en="Sterilization" data-es="Esterilización">Sterilization</span></div><div class="pi-co2" id="pco2-s">—</div></div>
-      <div class="pi" id="pi-pack" onclick="showP('pack')"><div class="pi-row"><span class="pi-dot" style="background:var(--p)"></span><span class="pi-name" data-en="Packaging" data-es="Empaque">Packaging</span></div><div class="pi-co2" id="pco2-p">—</div></div>
-      <div class="pi" id="pi-pol" onclick="showP('pol')"><div class="pi-row"><span class="pi-dot" style="background:var(--r)"></span><span class="pi-name" data-en="Policy" data-es="Política">Policy</span></div><div class="pi-co2" id="pco2-r">—</div></div>
-      <div class="pi" id="pi-stor" onclick="showP('stor')"><div class="pi-row"><span class="pi-dot" style="background:var(--st)"></span><span class="pi-name" data-en="Storage" data-es="Almacenamiento">Storage</span></div><div class="pi-co2" id="pco2-st">—</div></div>
-      <div class="pi" id="pi-proc" onclick="showP('proc')"><div class="pi-row"><span class="pi-dot" style="background:var(--teal)"></span><span class="pi-name" data-en="Procurement" data-es="Abastecimiento">Procurement</span></div><div class="pi-co2" id="pco2-t">—</div></div>
+      <div class="pi active" id="pi-wash" onclick="showP('wash')"><div class="pi-row"><span class="pi-dot" style="background:var(--w)"></span><span class="pi-name" data-en="Washing">Washing</span></div><div class="pi-co2" id="pco2-w">—</div></div>
+      <div class="pi" id="pi-ster" onclick="showP('ster')"><div class="pi-row"><span class="pi-dot" style="background:var(--s)"></span><span class="pi-name" data-en="Sterilization">Sterilization</span></div><div class="pi-co2" id="pco2-s">—</div></div>
+      <div class="pi" id="pi-pack" onclick="showP('pack')"><div class="pi-row"><span class="pi-dot" style="background:var(--p)"></span><span class="pi-name" data-en="Packaging">Packaging</span></div><div class="pi-co2" id="pco2-p">—</div></div>
+      <div class="pi" id="pi-pol" onclick="showP('pol')"><div class="pi-row"><span class="pi-dot" style="background:var(--r)"></span><span class="pi-name" data-en="Policy">Policy</span></div><div class="pi-co2" id="pco2-r">—</div></div>
+      <div class="pi" id="pi-stor" onclick="showP('stor')"><div class="pi-row"><span class="pi-dot" style="background:var(--st)"></span><span class="pi-name" data-en="Storage">Storage</span></div><div class="pi-co2" id="pco2-st">—</div></div>
+      <div class="pi" id="pi-proc" onclick="showP('proc')"><div class="pi-row"><span class="pi-dot" style="background:var(--teal)"></span><span class="pi-name" data-en="Procurement">Procurement</span></div><div class="pi-co2" id="pco2-t">—</div></div>
       <div class="tier-guide"><div class="tg-ttl">Tier guide</div><div class="tg-row"><span class="tc t1c">T1</span><span class="tg-tx">Required — measurable</span></div><div class="tg-row"><span class="tc t2c">T2</span><span class="tg-tx">Secondary — proxy</span></div></div>
     </aside>
     <div class="dpanel">
@@ -529,7 +530,7 @@ body.simple-mode .expert-note{display:none}
               <div class="ir"><div><div class="iname">Electricity — 18-min prion cycle <span class="tc t1c">T1</span></div><div class="expert-note">Bonn: 17 kWh (Rainer 18 Sept 2026)</div></div><div class="ivw"><input class="inum" id="s-elec18" type="number" value="17" step="0.5" oninput="calc()"><span class="iunit">kWh</span></div></div>
               <div class="ir"><div><div class="iname">Water — softened per cycle <span class="tc t1c">T1</span></div><div class="expert-note">Bonn: 15 L</div></div><div class="ivw"><input class="inum" id="s-water" type="number" value="15" step="1" oninput="calc()"><span class="iunit">L</span></div></div>
               <div class="ir"><div><div class="iname">Water — vacuum pump <span class="sc-tag ss">S3</span> <span class="tc t1c">T1</span></div><div class="expert-note">Bonn TTC: 130 L. France MMM chilled: 40 L. Without: 200 L.</div></div><div class="ivw"><input class="inum" id="s-vac" type="number" value="130" step="5" oninput="calc()"><span class="iunit">L</span></div></div>
-              <div class="ir"><div><div class="iname">Physical tray-sets / cycle (avg) <span class="sc-tag ss">S2</span> <span class="tc t1c">T1</span></div><div class="expert-note">Bonn confirmed (Rainer 18 Sept 2026): 14 sets/cycle</div></div><div class="ivw"><input class="inum" id="s-trays" type="number" value="14" step="1" oninput="calc()"><span class="iunit">sets</span></div></div>
+              <div class="ir"><div><div class="iname">Physical tray-sets / cycle (avg) <span class="sc-tag ss">S2</span> <span class="tc t1c">T1</span></div><div class="expert-note">Bonn confirmed (Rainer 18 Sept 2026): 14 sets/cycle. DIN container basket formats: 1/1 (485×253 mm) · 3/4 (406×253 mm) · 1/2 (243×253 mm)</div></div><div class="ivw"><input class="inum" id="s-trays" type="number" value="14" step="1" oninput="calc()"><span class="iunit">sets</span></div></div>
               <div class="ir"><div><div class="iname">Max validated load (IQ/OQ/PQ) <span class="sc-tag ss">S2</span> <span class="tc t1c">T1</span></div><div class="expert-note">Bonn: 8 STE. EN ISO 17665-1 §6.</div></div><div class="ivw"><input class="inum" id="s-trays-max" type="number" value="8" step="1" oninput="calc()"><span class="iunit">max STE</span></div></div>
               <div class="ir"><div><div class="iname">Bowie-Dick tests per week <span class="sc-tag ss">S1</span> <span class="tc t1c">T1</span></div><div class="expert-note">Bonn: 6-9/week</div></div><div class="ivw"><input class="inum" id="s-bd" type="number" value="7" step="1" oninput="calc()"><span class="iunit">tests/wk</span></div></div>
               <div class="ir"><div><div class="iname">Water per Bowie-Dick test <span class="tc t1c">T1</span></div><div class="expert-note">Bonn: 100 L/test (Rainer 3 Aug 2026)</div></div><div class="ivw"><input class="inum" id="s-bd-water" type="number" value="100" step="5" oninput="calc()"><span class="iunit">L/test</span></div></div>
@@ -612,9 +613,9 @@ body.simple-mode .expert-note{display:none}
         </div>
       </div><!-- /dp -->
       <div class="dnav" id="dnav-s2">
-        <button class="btn-back" onclick="goTo('s1')" data-en="&#8592; Change CSSD" data-es="&#8592; Cambiar CSSD">&#8592; Change CSSD</button>
+        <button class="btn-back" onclick="goTo('s1')" data-en="&#8592; Change CSSD">&#8592; Change CSSD</button>
         <div class="tot-pill">Total: <strong id="foot-tot">—</strong> <span style="font-size:9px;color:var(--slate-lt)">kg CO&#8322;e/cycle</span></div>
-        <button class="btn-next" onclick="goTo('s3')" data-en="View results &#8594;" data-es="Ver resultados &#8594;">View results &#8594;</button>
+        <button class="btn-next" onclick="goTo('s3')" data-en="View results &#8594;">View results &#8594;</button>
       </div>
     </div>
   </div>
@@ -624,14 +625,14 @@ body.simple-mode .expert-note{display:none}
 <div class="screen" id="s3">
   <div class="r-wrap">
     <div class="r-sum">
-      <div class="rsi"><div class="rsv teal" id="r-tot">—</div><div class="rsl">&#9312; kg CO&#8322;e / cycle · comparable across all WFHSS countries</div></div>
+      <div class="rsi"><div class="rsv teal" id="r-tot">—</div><div class="rsl">&#9312; kg CO&#8322;e / cycle · comparable across all WFHSS countries</div><div class="rsi-equiv" id="equiv-co2">—</div></div>
       <div class="rsi"><div class="rsv amber" id="r-perset">—</div><div class="rsl">&#9313; kg CO&#8322;e / set · internal use only · not comparable between CSSDs</div></div>
       <div class="rsi" id="r-uo-block" style="display:none"><div class="rsv orange" id="r-uo-val">—</div><div class="rsl">France CO&#8322;e / UO · SF2S barème</div></div>
-      <div class="rsi"><div class="rsv red" id="r-water">—</div><div class="rsl">L water / cycle · always directly comparable</div></div>
+      <div class="rsi"><div class="rsv red" id="r-water">—</div><div class="rsl">L water / cycle · always directly comparable</div><div class="rsi-equiv" id="equiv-water">—</div></div>
     </div>
     <div class="r-demo-bar" id="r-demo-bar" style="display:none">
     <div class="r-demo-bar-icon">📊</div>
-    <div data-en="<strong>Demo mode</strong> — Results based on confirmed pilot data from <strong>University Hospital Bonn</strong> · Rainer Stens, DGSV · Germany · Cluster B · 0.363 kg CO₂e/kWh · Confirmed September 2026" data-es="<strong>Modo demo</strong> — Resultados basados en datos piloto confirmados de <strong>Hospital Universitario de Bonn</strong> · Rainer Stens, DGSV · Alemania · Cluster B · 0.363 kg CO₂e/kWh · Confirmado septiembre 2026"><strong>Demo mode</strong> — Results based on confirmed pilot data from <strong>University Hospital Bonn</strong> · Rainer Stens, DGSV · Germany · Cluster B · 0.363 kg CO₂e/kWh · Confirmed September 2026</div>
+    <div data-en="<strong>Demo mode</strong> — Results based on confirmed pilot data from <strong>Bonn Community Hospital</strong> · Rainer Stens, DGSV · Germany · Cluster B · 0.363 kg CO₂e/kWh · Confirmed September 2026"><strong>Demo mode</strong> — Results based on confirmed pilot data from <strong>Bonn Community Hospital</strong> · Rainer Stens, DGSV · Germany · Cluster B · 0.363 kg CO₂e/kWh · Confirmed September 2026</div>
   </div>
   <div class="r-ctx" id="r-ctx"></div>
     <div class="r-grid">
@@ -655,39 +656,38 @@ body.simple-mode .expert-note{display:none}
       <div class="rc"><div class="rc-h"><span class="rc-ht">Sterilization scenarios S2 · S3 · R1</span></div><div class="rc-body" id="r-ster-sc"></div></div>
       <div class="rc rc-full"><div class="rc-h"><span class="rc-ht">Literature benchmark</span></div>
         <div class="rc-body">
-          <div class="bm-row"><div class="bm-src">Rizan 2022<br>UK 0.207</div><div class="bm-track"><div class="bm-fill" style="background:#6366F1;width:100%"></div></div><div class="bm-val">15.31 kg</div></div>
-          <div class="bm-row"><div class="bm-src">Fraunhofer 2025<br>DE 0.363</div><div class="bm-track"><div class="bm-fill" style="background:#8B5CF6;width:90%"></div></div><div class="bm-val">13.84 kg</div></div>
+          <div style="font-size:10px;color:var(--slate);line-height:1.6;padding:4px 0 8px">⚠️ Phase 1 results are for internal operational use only — not for cross-site comparison. Published benchmarks will be available in Phase 2 following external critical review (ISO 14044 §6).</div>
           <div class="bm-row"><div class="bm-src" id="bm-src" style="color:var(--teal);font-weight:700">Your CSSD</div><div class="bm-track"><div class="bm-fill" id="bm-fill" style="background:var(--teal)"></div></div><div class="bm-val" id="bm-val">— kg</div></div>
         </div>
       </div>
       <div class="rc rc-full"><div class="rc-h"><span class="rc-ht">Recommended actions</span></div><div class="rc-body"><div class="reco-list" id="r-recos"></div></div></div>
-      <div class="iso-bar"><strong>WFHSS SterilPrint — Phase 1 Carbon Footprint Assessment · Pilot v1.2 · September 2026</strong><br>ISO 14067:2018 + ISO 14044:2006 · Gate-to-gate · EF: IEA 2026 + national authorities · SMS PP: 3.8 kg CO&#8322;e/kg (ecoinvent 3.10) · Paper/plastic: 1.60 kg CO&#8322;e/kg (DEFRA 2025 · Catherine Guimier Aug 2026)<br><strong>&#9888; Pilot study — for operational decision support and professional learning only. ISO 14044 §4.2.3.3.</strong></div>
+      <div class="iso-bar"><strong>WFHSS SterilPrint — Phase 1 Carbon Footprint Assessment · Pilot v1.2 · Belgrade 2026</strong><br>ISO 14067:2018 · ISO 14044:2006 · Gate-to-gate · Functional unit: one complete reprocessing cycle · EF: IEA Emissions Factors 2026 + national energy authorities · ecoinvent 3.10 · DEFRA 2025<br><strong>&#9888; Pilot study — for operational decision support and professional learning only. Not certified. External critical review required before public comparative publication (ISO 14044 §4.2.3.3).</strong></div>
     </div>
     <div class="submit-panel" id="submit-panel">
-    <h3 data-en="&#128228; Submit your pilot data to the shared database" data-es="&#128228; Enviar tus datos piloto a la base de datos compartida">&#128228; Submit your pilot data to the shared database</h3>
-    <p data-en="Your results will be visible to all 4 pilot sites in real time. The shared Google Sheet is accessible to Rainer (Bonn), Catherine (Grenoble), Mayra (Colombia) and Cinthia (Chile)." data-es="Tus resultados serán visibles para los 4 sitios piloto en tiempo real. La planilla compartida es accesible a Rainer (Bonn), Catherine (Grenoble), Mayra (Colombia) y Cinthia (Chile).">Your results will be visible to all 4 pilot sites in real time.</p>
+    <h3 data-en="&#128228; Join the pilot — share your results">&#128228; Join the pilot — share your results</h3>
+    <p data-en="Want to contribute your CSSD data to the WFHSS SterilPrint pilot programme? Submit your results and join the growing network of CSSD departments measuring their environmental footprint. Data is used for professional learning and framework development only.">Want to contribute your CSSD data to the WFHSS SterilPrint pilot programme? Submit your results and join the growing network of CSSD departments measuring their environmental footprint.</p>
     <div class="submit-fields">
       <div class="submit-field">
-        <label data-en="Your name (auto-filled)" data-es="Tu nombre (auto-completado)">Your name</label>
+        <label data-en="Your name (auto-filled)">Your name</label>
         <input type="text" id="submit-name-confirm" readonly style="opacity:.6">
       </div>
       <div class="submit-field">
-        <label data-en="Submission date" data-es="Fecha de envío">Date</label>
+        <label data-en="Submission date">Date</label>
         <input type="text" id="submit-date" readonly style="opacity:.6">
       </div>
       <div class="submit-field" style="grid-column:1/-1">
-        <label data-en="Notes / observations (optional)" data-es="Notas / observaciones (opcional)">Notes</label>
+        <label data-en="Notes / observations (optional)">Notes</label>
         <textarea id="submit-notes" placeholder="Any observations, pending data, or corrections to flag..."></textarea>
       </div>
     </div>
-    <button class="btn-submit" id="btn-submit" onclick="submitData()" data-en="Submit my pilot data →" data-es="Enviar mis datos piloto →">Submit my pilot data →</button>
+    <button class="btn-submit" id="btn-submit" onclick="submitData()" data-en="Submit my pilot data →">Submit my pilot data →</button>
     <div class="submit-status" id="submit-status"></div>
   </div>
   <div class="r-footer">
-      <button class="btn-back" onclick="goTo('s2')" data-en="&#8592; Edit data" data-es="&#8592; Editar datos">&#8592; Edit data</button>
-      <button id="btn-my-cssd" onclick="clearDemoAndSetup()" style="display:none;background:linear-gradient(135deg,#FFD166,#F0B429);color:#1A3A44;border:none;font-weight:700;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:12px" data-en="&#8594; Calculate for my CSSD" data-es="&#8594; Calcular para mi CSSD">&#8594; Calculate for my CSSD</button>
+      <button class="btn-back" onclick="goTo('s2')" data-en="&#8592; Edit data">&#8592; Edit data</button>
+      <button id="btn-my-cssd" onclick="clearDemoAndSetup()" style="display:none;background:linear-gradient(135deg,#FFD166,#F0B429);color:#1A3A44;border:none;font-weight:700;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:12px" data-en="&#8594; Calculate for my CSSD">&#8594; Calculate for my CSSD</button>
       <div class="tot-pill">Total CO&#8322;e/cycle: <strong id="r-foot-tot">—</strong></div>
-      <button class="btn-next" onclick="goTo('s0')" data-en="&#8592; Back to About" data-es="&#8592; Volver al inicio">&#8592; Back to About</button>
+      <button class="btn-next" onclick="goTo('s0')" data-en="&#8592; Back to About">&#8592; Back to About</button>
     </div>
   </div>
 </div>
@@ -696,16 +696,16 @@ body.simple-mode .expert-note{display:none}
 <div class="screen" id="s4">
   <div class="survey-wrap">
     <div class="survey-header">
-      <div class="survey-header-tag" data-en="WFHSS SterilPrint · Phase 1 Pilot 2026" data-es="WFHSS SterilPrint · Fase 1 Piloto 2026">WFHSS SterilPrint · Phase 1 Pilot 2026</div>
-      <div class="survey-header-h" data-en="Tool evaluation" data-es="Evaluación de la herramienta">Tool evaluation</div>
-      <div class="survey-header-sub" data-en="12 questions · ~4 minutes · Your responses improve the tool for all WFHSS professionals. Scale: 1 = Strongly disagree — 5 = Strongly agree" data-es="12 preguntas · ~4 minutos · Tus respuestas mejoran la herramienta. Escala: 1 = Totalmente en desacuerdo — 5 = Totalmente de acuerdo">12 questions · ~4 minutes · Your responses improve the tool for all WFHSS professionals. Scale: 1 = Strongly disagree — 5 = Strongly agree</div>
+      <div class="survey-header-tag" data-en="WFHSS SterilPrint · Phase 1 Pilot 2026">WFHSS SterilPrint · Phase 1 Pilot 2026</div>
+      <div class="survey-header-h" data-en="Tool evaluation">Tool evaluation</div>
+      <div class="survey-header-sub" data-en="12 questions · ~4 minutes · Your responses improve the tool for all WFHSS professionals. Scale: 1 = Strongly disagree — 5 = Strongly agree">12 questions · ~4 minutes · Your responses improve the tool for all WFHSS professionals. Scale: 1 = Strongly disagree — 5 = Strongly agree</div>
     </div>
 
     <div class="survey-block">
-      <div class="survey-block-title" data-en="Block A — Usability" data-es="Bloque A — Usabilidad">Block A — Usability</div>
+      <div class="survey-block-title" data-en="Block A — Usability">Block A — Usability</div>
       <div class="survey-q" >
         <div class="survey-q-code">A1</div>
-        <div class="survey-q-text" data-en="I was able to navigate between tabs (Setup, Data, Results) without difficulty." data-es="I was able to navigate between tabs (Setup, Data, Results) without difficulty.">I was able to navigate between tabs (Setup, Data, Results) without difficulty.</div>
+        <div class="survey-q-text" data-en="I was able to navigate between tabs (Setup, Data, Results) without difficulty.">I was able to navigate between tabs (Setup, Data, Results) without difficulty.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'a1',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'a1',2)">2</button>
@@ -713,11 +713,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'a1',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'a1',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" >
         <div class="survey-q-code">A2</div>
-        <div class="survey-q-text" data-en="The input fields are clear — I knew what data to enter in each one." data-es="The input fields are clear — I knew what data to enter in each one.">The input fields are clear — I knew what data to enter in each one.</div>
+        <div class="survey-q-text" data-en="The input fields are clear — I knew what data to enter in each one.">The input fields are clear — I knew what data to enter in each one.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'a2',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'a2',2)">2</button>
@@ -725,11 +725,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'a2',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'a2',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" style="margin-bottom:0">
         <div class="survey-q-code">A3</div>
-        <div class="survey-q-text" data-en="The results are presented in an understandable way, without prior LCA training." data-es="The results are presented in an understandable way, without prior LCA training.">The results are presented in an understandable way, without prior LCA training.</div>
+        <div class="survey-q-text" data-en="The results are presented in an understandable way, without prior LCA training.">The results are presented in an understandable way, without prior LCA training.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'a3',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'a3',2)">2</button>
@@ -737,15 +737,15 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'a3',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'a3',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
     </div>
 
     <div class="survey-block">
-      <div class="survey-block-title" data-en="Block B — Conceptual understanding" data-es="Bloque B — Comprensión conceptual">Block B — Conceptual understanding</div>
+      <div class="survey-block-title" data-en="Block B — Conceptual understanding">Block B — Conceptual understanding</div>
       <div class="survey-q" >
         <div class="survey-q-code">B1</div>
-        <div class="survey-q-text" data-en="After using the tool, I can identify which process contributes most to CO₂e in my CSSD." data-es="After using the tool, I can identify which process contributes most to CO₂e in my CSSD.">After using the tool, I can identify which process contributes most to CO₂e in my CSSD.</div>
+        <div class="survey-q-text" data-en="After using the tool, I can identify which process contributes most to CO₂e in my CSSD.">After using the tool, I can identify which process contributes most to CO₂e in my CSSD.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'b1',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'b1',2)">2</button>
@@ -753,11 +753,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'b1',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'b1',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" >
         <div class="survey-q-code">B2</div>
-        <div class="survey-q-text" data-en="I understand the difference between physical inventory results (kWh, litres) and CO₂e results, and know when each is more useful." data-es="I understand the difference between physical inventory results (kWh, litres) and CO₂e results, and know when each is more useful.">I understand the difference between physical inventory results (kWh, litres) and CO₂e results, and know when each is more useful.</div>
+        <div class="survey-q-text" data-en="I understand the difference between physical inventory results (kWh, litres) and CO₂e results, and know when each is more useful.">I understand the difference between physical inventory results (kWh, litres) and CO₂e results, and know when each is more useful.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'b2',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'b2',2)">2</button>
@@ -765,11 +765,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'b2',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'b2',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" >
         <div class="survey-q-code">B3</div>
-        <div class="survey-q-text" data-en="I know under what conditions I can use these results to make decisions in my CSSD." data-es="I know under what conditions I can use these results to make decisions in my CSSD.">I know under what conditions I can use these results to make decisions in my CSSD.</div>
+        <div class="survey-q-text" data-en="I know under what conditions I can use these results to make decisions in my CSSD.">I know under what conditions I can use these results to make decisions in my CSSD.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'b3',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'b3',2)">2</button>
@@ -777,13 +777,13 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'b3',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'b3',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-france-block" id="survey-b4">
-        <div class="survey-france-tag" data-en="France — SF2S barème" data-es="Francia — SF2S barème">France — SF2S barème</div>
+        <div class="survey-france-tag" data-en="France — SF2S barème">France — SF2S barème</div>
         <div class="survey-q" style="margin-bottom:0">
         <div class="survey-q-code">B4</div>
-        <div class="survey-q-text" data-en="The CO₂e per Unité d’Œuvre result is useful and applicable in my CSSD work context." data-es="The CO₂e per Unité d’Œuvre result is useful and applicable in my CSSD work context.">The CO₂e per Unité d’Œuvre result is useful and applicable in my CSSD work context.</div>
+        <div class="survey-q-text" data-en="The CO₂e per Unité d’Œuvre result is useful and applicable in my CSSD work context.">The CO₂e per Unité d’Œuvre result is useful and applicable in my CSSD work context.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'b4',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'b4',2)">2</button>
@@ -791,16 +791,16 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'b4',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'b4',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       </div>
     </div>
 
     <div class="survey-block">
-      <div class="survey-block-title" data-en="Block C — Value for decision-making" data-es="Bloque C — Valor para la toma de decisiones">Block C — Value for decision-making</div>
+      <div class="survey-block-title" data-en="Block C — Value for decision-making">Block C — Value for decision-making</div>
       <div class="survey-q" >
         <div class="survey-q-code">C1</div>
-        <div class="survey-q-text" data-en="The results show me where the critical environmental impact hotspots are in my CSSD." data-es="The results show me where the critical environmental impact hotspots are in my CSSD.">The results show me where the critical environmental impact hotspots are in my CSSD.</div>
+        <div class="survey-q-text" data-en="The results show me where the critical environmental impact hotspots are in my CSSD.">The results show me where the critical environmental impact hotspots are in my CSSD.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'c1',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'c1',2)">2</button>
@@ -808,11 +808,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'c1',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'c1',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" >
         <div class="survey-q-code">C2</div>
-        <div class="survey-q-text" data-en="I can identify at least one concrete action I could implement in my CSSD based on these results." data-es="I can identify at least one concrete action I could implement in my CSSD based on these results.">I can identify at least one concrete action I could implement in my CSSD based on these results.</div>
+        <div class="survey-q-text" data-en="I can identify at least one concrete action I could implement in my CSSD based on these results.">I can identify at least one concrete action I could implement in my CSSD based on these results.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'c2',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'c2',2)">2</button>
@@ -820,11 +820,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'c2',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'c2',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" style="margin-bottom:0">
         <div class="survey-q-code">C3</div>
-        <div class="survey-q-text" data-en="I would use this tool regularly if it were available at my institution." data-es="I would use this tool regularly if it were available at my institution.">I would use this tool regularly if it were available at my institution.</div>
+        <div class="survey-q-text" data-en="I would use this tool regularly if it were available at my institution.">I would use this tool regularly if it were available at my institution.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'c3',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'c3',2)">2</button>
@@ -832,15 +832,15 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'c3',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'c3',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
     </div>
 
     <div class="survey-block">
-      <div class="survey-block-title" data-en="Block D — Diagnosis" data-es="Bloque D — Diagnóstico">Block D — Diagnosis</div>
+      <div class="survey-block-title" data-en="Block D — Diagnosis">Block D — Diagnosis</div>
       <div class="survey-q" >
         <div class="survey-q-code">D1</div>
-        <div class="survey-q-text" data-en="The data I needed to complete the tool was available in my CSSD without additional searching." data-es="The data I needed to complete the tool was available in my CSSD without additional searching.">The data I needed to complete the tool was available in my CSSD without additional searching.</div>
+        <div class="survey-q-text" data-en="The data I needed to complete the tool was available in my CSSD without additional searching.">The data I needed to complete the tool was available in my CSSD without additional searching.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'d1',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'d1',2)">2</button>
@@ -848,11 +848,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'d1',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'d1',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" >
         <div class="survey-q-code">D2</div>
-        <div class="survey-q-text" data-en="The expert / simple mode adapted well to my level of knowledge." data-es="The expert / simple mode adapted well to my level of knowledge.">The expert / simple mode adapted well to my level of knowledge.</div>
+        <div class="survey-q-text" data-en="The expert / simple mode adapted well to my level of knowledge.">The expert / simple mode adapted well to my level of knowledge.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'d2',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'d2',2)">2</button>
@@ -860,11 +860,11 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'d2',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'d2',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
       <div class="survey-q" style="margin-bottom:0">
         <div class="survey-q-code">D3</div>
-        <div class="survey-q-text" data-en="The tool covers the most relevant processes of my CSSD." data-es="The tool covers the most relevant processes of my CSSD.">The tool covers the most relevant processes of my CSSD.</div>
+        <div class="survey-q-text" data-en="The tool covers the most relevant processes of my CSSD.">The tool covers the most relevant processes of my CSSD.</div>
         <div class="likert-row">
           <button class="likert-btn" onclick="selectLikert(this,'d3',1)">1</button>
           <button class="likert-btn" onclick="selectLikert(this,'d3',2)">2</button>
@@ -872,27 +872,27 @@ body.simple-mode .expert-note{display:none}
           <button class="likert-btn" onclick="selectLikert(this,'d3',4)">4</button>
           <button class="likert-btn" onclick="selectLikert(this,'d3',5)">5</button>
         </div>
-        <div class="likert-labels"><span data-en="Strongly disagree" data-es="Totalmente en desacuerdo">Strongly disagree</span><span data-en="Strongly agree" data-es="Totalmente de acuerdo">Strongly agree</span></div>
+        <div class="likert-labels"><span data-en="Strongly disagree">Strongly disagree</span><span data-en="Strongly agree">Strongly agree</span></div>
       </div>
     </div>
 
     <div class="survey-block">
-      <div class="survey-block-title" data-en="Block E — Your direct feedback" data-es="Bloque E — Tu opinión directa">Block E — Your direct feedback</div>
+      <div class="survey-block-title" data-en="Block E — Your direct feedback">Block E — Your direct feedback</div>
       <div class="survey-q">
         <div class="survey-q-code">E1</div>
-        <div class="survey-q-text" data-en="What was most useful or what did you understand best when using SterilPrint?" data-es="¿Qué fue lo más útil al usar SterilPrint?">What was most useful or what did you understand best when using SterilPrint?</div>
+        <div class="survey-q-text" data-en="What was most useful or what did you understand best when using SterilPrint?">What was most useful or what did you understand best when using SterilPrint?</div>
         <textarea class="survey-textarea" id="sq-e1" placeholder="Write your answer here..."></textarea>
       </div>
       <div class="survey-q" style="margin-bottom:0">
         <div class="survey-q-code">E2</div>
-        <div class="survey-q-text" data-en="What would you change, add or remove to make the tool more useful in your daily practice?" data-es="¿Qué cambiarías, agregarías o eliminarías para que la herramienta sea más útil?">What would you change, add or remove to make the tool more useful in your daily practice?</div>
+        <div class="survey-q-text" data-en="What would you change, add or remove to make the tool more useful in your daily practice?">What would you change, add or remove to make the tool more useful in your daily practice?</div>
         <textarea class="survey-textarea" id="sq-e2" placeholder="Write your answer here..."></textarea>
       </div>
     </div>
 
-    <button class="btn-survey-submit" id="btn-survey" onclick="submitSurvey()" data-en="Submit feedback →" data-es="Enviar evaluación →">Submit feedback →</button>
+    <button class="btn-survey-submit" id="btn-survey" onclick="submitSurvey()" data-en="Submit feedback →">Submit feedback →</button>
     <div class="survey-submit-status" id="survey-status"></div>
-    <div style="font-size:10px;color:var(--slate-lt);text-align:center;margin-top:16px;line-height:1.6" data-en="Your responses are sent to the WFHSS SterilPrint team · No personal data is shared · Based on SUS (Brooke 1996) · TAM (Davis 1989) · Health-ITUES 2023" data-es="Tus respuestas se envían al equipo WFHSS SterilPrint · No se comparten datos personales">Your responses are sent to the WFHSS SterilPrint team · No personal data is shared · Based on SUS (Brooke 1996) · TAM (Davis 1989) · Health-ITUES 2023</div>
+    <div style="font-size:10px;color:var(--slate-lt);text-align:center;margin-top:16px;line-height:1.6" data-en="Your responses are sent to the WFHSS SterilPrint team · No personal data is shared · Based on SUS (Brooke 1996) · TAM (Davis 1989) · Health-ITUES 2023">Your responses are sent to the WFHSS SterilPrint team · No personal data is shared · Based on SUS (Brooke 1996) · TAM (Davis 1989) · Health-ITUES 2023</div>
   </div>
 </div>
 
@@ -928,19 +928,7 @@ function toggleMode(){
   if(EXPERT){btn.classList.add('expert');lbl.textContent='Expert';}
   else{btn.classList.remove('expert');lbl.textContent='Simple';}
 }
-function setLang(l){
-  LANG=l;
-  document.querySelectorAll('[data-en]').forEach(function(el){
-    var val=el.getAttribute('data-'+l)||el.getAttribute('data-en');
-    if(!val) return;
-    if(el.tagName==='OPTION') el.text=val;
-    else if(el.tagName==='INPUT') el.placeholder=val;
-    else el.textContent=val;
-  });
-  document.querySelectorAll('.lb').forEach(function(b){b.classList.remove('active');});
-  document.getElementById('lb-'+l).classList.add('active');
-  if(document.getElementById('s3').classList.contains('active')) buildResults();
-}
+
 function updateEF(){
   var sel=document.getElementById('u-country'),opt=sel.options[sel.selectedIndex];
   if(!opt.value){document.getElementById('ef-box').style.display='none';document.getElementById('cpill').style.display='none';return;}
@@ -1039,6 +1027,24 @@ function buildResults(){
   document.getElementById('r-tot').textContent=r.grand.toFixed(2);
   document.getElementById('r-perset').textContent=r.perSet.toFixed(3);
   document.getElementById('r-water').textContent=Math.round(r.wWaterL+r.sWaterL);
+  // ── Equivalences ──
+  var totalL = Math.round(r.wWaterL + r.sWaterL);
+  var showerMin = (totalL / 8).toFixed(0);   // 8 L/min standard shower (WHO)
+  var showerSec = Math.round(totalL / 8 * 60);
+  var waterEl = document.getElementById('equiv-water');
+  if(waterEl) waterEl.innerHTML = '≈ <span>' + showerMin + ' min</span> of shower water (8 L/min · WHO) or <span>' + (totalL/1000).toFixed(2) + ' m³</span> total';
+
+  var totalCO2 = r.grand;
+  // Trees: IPCC average 21 kg CO2/tree/year absorbed
+  var treeDays = (totalCO2 / 21 * 365).toFixed(0);
+  // Plastic production: ~2.5 kg CO2e per kg plastic (ecoinvent 3.10 global average)
+  var plasticKg = (totalCO2 / 2.5).toFixed(1);
+  // Monthly CO2 for context
+  var monthlyKg = (totalCO2 * v('s-cycles') * v('w-days') * 12 / 12).toFixed(0);
+  var annualKg = (totalCO2 * v('s-cycles') * v('w-days') * 12).toFixed(0);
+  var treesYear = (parseFloat(annualKg) / 21).toFixed(0);
+  var co2El = document.getElementById('equiv-co2');
+  if(co2El) co2El.innerHTML = '≈ <span>' + plasticKg + ' kg</span> plastic produced · or <span>' + treeDays + ' days</span> of CO₂ absorption by one tree (IPCC · 21 kg/tree/yr)';
   document.getElementById('r-foot-tot').textContent=r.grand.toFixed(2)+' kg CO\u2082e/cycle';
   if(IS_FRANCE&&USER_UO>0){var ac=r.grand*v('s-cycles')*v('w-days')*12;document.getElementById('r-uo-val').textContent=(ac/USER_UO).toFixed(4);document.getElementById('r-uo-block').style.display='block';}
   var cc={A:'#16A34A',B:'#3A8F8F',C:'#B45309',D:'#DC2626',E:'#64748B'};
@@ -1050,7 +1056,9 @@ function buildResults(){
   document.getElementById('r-breakdown').innerHTML=items.map(function(i){return '<div class="brow"><div class="btop"><span class="bname">'+i.n+'</span><span class="bval">'+i.v.toFixed(3)+' kg</span></div><div class="btrack"><div class="bfill" style="background:'+i.c+';width:'+Math.round(i.v/mx*100)+'%"></div></div></div>';}).join('');
   var totE=(r.wElecKwh||0)+(r.sElecKwh||0),totW=(r.wWaterL||0)+(r.sWaterL||0);
   document.getElementById('ri-elec').textContent=totE.toFixed(2)+' kWh';document.getElementById('rf-elec').style.width=Math.min(100,totE/30*100)+'%';
-  document.getElementById('ri-water').textContent=totW.toFixed(0)+' L';document.getElementById('rf-water').style.width=Math.min(100,totW/600*100)+'%';
+  document.getElementById('ri-water').textContent=totW.toFixed(0)+' L';
+  var wctx=document.getElementById('water-context');
+  if(wctx) wctx.textContent='≈ '+(totW/8).toFixed(0)+' min shower · '+(totW/1000).toFixed(2)+' m³ · direct comparison across all countries';document.getElementById('rf-water').style.width=Math.min(100,totW/600*100)+'%';
   document.getElementById('ri-sms').textContent=(r.wFlex*1000).toFixed(1)+' g';document.getElementById('rf-sms').style.width=Math.min(100,(r.wFlex*1000)/300*100)+'%';
   document.getElementById('ri-det').textContent=v('w-det').toFixed(0)+' mL';document.getElementById('rf-det').style.width=Math.min(100,v('w-det')/300*100)+'%';
   var pctF=r.pctSMS+r.pctPaper,co2Flex=pctF*r.flexCO2perSet,co2Cont=r.pctCont*r.cCO2perSet;
@@ -1072,7 +1080,7 @@ function buildResults(){
   if(r.pctSMS+r.pctPaper>0&&r.cMfg>0&&r.flexCO2perSet>r.cCO2perSet) recos.push({p:'m',t:'P1 \u2014 Increase rigid container proportion',s:(r.flexCO2perSet-r.cCO2perSet).toFixed(3)+' kg CO\u2082e/set saved per set converted',a:'Long-term: breakeven ~6 years. Friedericy 2022, BMC 2026.'});
   if(v('w-act')>0) recos.push({p:'m',t:'W2 \u2014 Evaluate eliminating drying activator',s:'-'+(v('w-act')*EF_ACT).toFixed(3)+' kg CO\u2082e/cycle',a:'France: not mandated by IFU or national guidance (Catherine Guimier). Confirm with clinical team.'});
   if(r.sVac>100) recos.push({p:'m',t:'S3 \u2014 Evaluate TTC vacuum technology at next renewal',s:'Reference: '+r.sVac+' L current vs '+r.sVacOld+' L old',a:'Bonn TTC: 130 L vs old 180 L. France: 40 L (chilled) vs 200 L (without chilled).'});
-  recos.push({p:'l',t:'W1 \u2014 Verify detergent dosing against IFU',s:'Savings if over-dosed',a:'Rizan et al. 2022: detergent optimisation is a standard recommended action.'});
+  recos.push({p:'l',t:'W1 \u2014 Verify detergent dosing against IFU',s:'Savings if over-dosed',a:'Verify detergent dosing is within IFU specifications — over-dosing increases CO₂e without benefit.'});
   var pm={h:{cls:'rh',tc:'rp-h',l:'HIGH'},m:{cls:'rm',tc:'rp-m',l:'MED'},l:{cls:'rl',tc:'rp-l',l:'LOW'}};
   document.getElementById('r-recos').innerHTML=recos.map(function(rc){return '<div class="reco-item '+pm[rc.p].cls+'"><span class="rp '+pm[rc.p].tc+'">'+pm[rc.p].l+'</span><div><div class="reco-tx">'+rc.t+'</div><div class="reco-sv">'+rc.s+'</div><div class="reco-ac">'+rc.a+'</div></div></div>';}).join('');
 }
@@ -1142,7 +1150,7 @@ function loadDemoAndStart() {
   // Pre-fill setup fields with Bonn data
   document.getElementById('u-name').value = 'Rainer Stens';
   document.getElementById('u-role').value = 'Head of Sterile Services';
-  document.getElementById('u-hospital').value = 'University Hospital Bonn';
+  document.getElementById('u-hospital').value = 'Bonn Community Hospital';
   var sel = document.getElementById('u-country');
   for (var i = 0; i < sel.options.length; i++) {
     if (sel.options[i].value === 'de') { sel.selectedIndex = i; break; }
