@@ -355,7 +355,7 @@ body.simple-mode .expert-note{display:none}
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:5px" data-en="WFHSS SterilPrint">WFHSS SterilPrint</div>
       <h1 style="font-size:clamp(20px,2.8vw,32px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:10px">Every choice shapes tomorrow.<br><span style="color:#7DD3D3">Every action</span> protects life.</h1>
       <p style="font-size:12px;color:rgba(255,255,255,.88);max-width:480px;line-height:1.7;margin-bottom:14px" data-en="Every reprocessing cycle consumes energy and water and emits CO₂. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost.">Every reprocessing cycle consumes energy and water and emits CO&#8322;. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost.</p>
-      <div style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:7px;padding:9px 12px;font-size:11px;color:#FDE68A;line-height:1.5;max-width:520px"><strong data-en="&#9888; Pilot v1.2 — Belgrade 2026.">&#9888; Pilot v1.2 — Belgrade 2026.</strong> <span data-en="Results for decision support and professional learning only. ISO 14044 §4.2.3.3.">Results for decision support and professional learning only. ISO 14044 §4.2.3.3.</span></div>
+      <div style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:7px;padding:9px 12px;font-size:11px;color:#FDE68A;line-height:1.5;max-width:520px"><strong data-en="&#9888; Pilot v1.4 — Belgrade 2026.">&#9888; Pilot v1.4 — Belgrade 2026.</strong> <span data-en="Results for decision support and professional learning only. ISO 14044 §4.2.3.3.">Results for decision support and professional learning only. ISO 14044 §4.2.3.3.</span></div>
     </div>
   </div>
 
@@ -568,8 +568,8 @@ body.simple-mode .expert-note{display:none}
               <div class="ir"><div><div class="iname">Validated lifetime <span class="tc t1c">T1</span></div><div class="expert-note">&#9888; MANUFACTURER CERTIFICATE ONLY. France ref: ~1000 cycles.</div></div><div class="ivw"><input class="inum" id="p-cont-life" type="number" value="1000" step="100" oninput="calc()"><span class="iunit">cycles</span></div></div>
               <div class="ir"><div><div class="iname">Container cleaning — electricity <span class="tc t2c">T2</span></div><div class="expert-note">Bonn: ~2.2 kWh/container</div></div><div class="ivw"><input class="inum" id="p-cont-elec" type="number" value="2.2" step="0.1" oninput="calc()"><span class="iunit">kWh/cycle</span></div></div>
               <div class="ir" style="margin-top:8px;padding:8px;background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.2);border-radius:6px">
-                <div><div class="iname">Inner liner / Vlies weight per set <span class="sc-tag sp2">P1-V</span> <span class="tc t1c">T1</span></div><div class="expert-note">Non-woven inner liner used inside rigid container (single-use, discarded each cycle). Weigh one sheet or divide pack net weight by number of sheets. EF: same SMS PP 3.8 kg CO₂e/kg. Bonn: weight pending Rainer confirmation. Enter 0 if no inner liner used.</div></div>
-                <div class="ivw"><input class="inum" id="p-vlies" type="number" value="" step="0.5" placeholder="e.g. 60" oninput="calc()"><span class="iunit">g/set</span></div>
+                <div><div class="iname">Inner liner / Vlies weight per set <span class="sc-tag sp2">P1-V</span> <span class="tc t1c">T1</span></div><div class="expert-note">Non-woven inner liner (SMS PP) used inside rigid container — single-use, discarded each cycle. EF: 3.8 kg CO₂e/kg. Bonn (Rainer Stens, Oct 2026): Vlies 52 g/m² · 120×120 cm sheet · double wrap = 2 × 74.9 g = 149.8 g Vlies + 12.2 g creped paper trayliner (60 g/m² · 58×35 cm) = 162 g/set total. Enter 0 if no inner liner used.</div></div>
+                <div class="ivw"><input class="inum" id="p-vlies" type="number" value="162" step="0.5" placeholder="e.g. 162" oninput="calc()"><span class="iunit">g/set</span></div>
               </div>
               <div class="bkv-box" id="bkv-box"><div class="bkv-num" id="bkv-num">—</div><div class="bkv-sub" id="bkv-sub">Enter container data to calculate breakeven</div></div>
             </div>
@@ -1119,7 +1119,7 @@ function collectData(){
     'Supplier Distance (km)':v2('t-dist'),'Monthly Consumables (kg)':v2('t-weight'),
     'Transport EF (kg CO2e/tkm)':v2('t-ef'),'Delivery Trips/week':v2('pr-trips'),'Delivery Distance avg (km)':v2('pr-dist'),
     'CO2e/cycle (kg)':txt('r-tot'),'CO2e/set (kg)':txt('r-perset'),'Water/cycle (L)':txt('r-water'),
-    'Tool Version':'SterilPrint v1.2','Submission Notes':v2('submit-notes')
+    'Tool Version':'SterilPrint v1.4','Submission Notes':v2('submit-notes')
   };
 }
 function submitData(){
@@ -1211,7 +1211,7 @@ function submitSurvey(){
     'Timestamp':new Date().toISOString(),
     'CSSD':USER_HOSP||'','Country':USER_COUNTRY||'','Cluster':USER_CLUSTER||'',
     'Grid EF (kg CO2e/kWh)':USER_EF||'',
-    'Tool Version':'SterilPrint v1.2','Survey Type':'Usability Feedback',
+    'Tool Version':'SterilPrint v1.4','Survey Type':'Usability Feedback',
     'E1':document.getElementById('sq-e1').value.trim(),
     'E2':document.getElementById('sq-e2').value.trim(),
     'B4':surveyData['b4']||'N/A'
