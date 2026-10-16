@@ -355,7 +355,7 @@ body.simple-mode .expert-note{display:none}
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:5px" data-en="WFHSS SterilPrint">WFHSS SterilPrint</div>
       <h1 style="font-size:clamp(20px,2.8vw,32px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:10px">Every choice shapes tomorrow.<br><span style="color:#7DD3D3">Every action</span> protects life.</h1>
       <p style="font-size:12px;color:rgba(255,255,255,.88);max-width:480px;line-height:1.7;margin-bottom:14px" data-en="Every reprocessing cycle consumes energy and water and emits CO₂. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost.">Every reprocessing cycle consumes energy and water and emits CO&#8322;. This tool helps CSSD managers measure that impact — and identify what they can change today, at zero cost.</p>
-      <div style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:7px;padding:9px 12px;font-size:11px;color:#FDE68A;line-height:1.5;max-width:520px"><strong data-en="&#9888; Pilot v1.4 — Belgrade 2026.">&#9888; Pilot v1.4 — Belgrade 2026.</strong> <span data-en="Results for decision support and professional learning only. ISO 14044 §4.2.3.3.">Results for decision support and professional learning only. ISO 14044 §4.2.3.3.</span></div>
+      <div style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:7px;padding:9px 12px;font-size:11px;color:#FDE68A;line-height:1.5;max-width:520px"><strong data-en="&#9888; Pilot v1.4 — Belgrade 2026.">&#9888; Pilot v1.5 — Belgrade 2026.</strong> <span data-en="Results for decision support and professional learning only. ISO 14044 §4.2.3.3.">Results for decision support and professional learning only. ISO 14044 §4.2.3.3.</span></div>
     </div>
   </div>
 
@@ -548,8 +548,8 @@ body.simple-mode .expert-note{display:none}
             <div class="isec-body">
               <div class="pack-mix"><div class="pm-title">Distribution of sets by packaging system</div><div class="pm-lead">Enter % for each type. Total must = 100%.</div>
                 <div class="pm-rows">
-                  <div class="pm-row"><span class="pm-label">Rigid container</span><input class="pm-input" id="pm-cont" type="number" value="0" min="0" max="100" step="5" oninput="checkMix();calc()"><span class="pm-unit">%</span></div>
-                  <div class="pm-row"><span class="pm-label">SMS non-woven PP</span><input class="pm-input" id="pm-sms" type="number" value="100" min="0" max="100" step="5" oninput="checkMix();calc()"><span class="pm-unit">%</span></div>
+                  <div class="pm-row"><span class="pm-label">Rigid container</span><input class="pm-input" id="pm-cont" type="number" value="100" min="0" max="100" step="5" oninput="checkMix();calc()"><span class="pm-unit">%</span></div>
+                  <div class="pm-row"><span class="pm-label">SMS non-woven PP</span><input class="pm-input" id="pm-sms" type="number" value="0" min="0" max="100" step="5" oninput="checkMix();calc()"><span class="pm-unit">%</span></div>
                   <div class="pm-row"><span class="pm-label">Paper/plastic pouch</span><input class="pm-input" id="pm-paper" type="number" value="0" min="0" max="100" step="5" oninput="checkMix();calc()"><span class="pm-unit">%</span></div>
                 </div>
                 <div class="pm-sum pm-ok" id="pm-sum">Total: 100% &#10003;</div>
@@ -1013,7 +1013,7 @@ function calc(){
     wElecKwh:v('w-elec')*v('w-cycles'),sElecKwh:sElecEff,wWaterL:v('w-water'),sWaterL:v('s-water')+v('s-vac'),
     wFlex,efFlex,pctCont,pctSMS,pctPaper,cMfg,cCO2perSet,flexCO2perSet,expRate,expWaste,co2PerSet,
     trays:v('s-trays'),traysMax:v('s-trays-max'),sElec:v('s-elec'),sElec18:v('s-elec18'),
-    wAct:v('w-act'),wElecOld:v('w-elec-old'),wWaterOld:v('w-water-old'),sVac:v('s-vac'),sVacOld:v('s-vac-old'),pol};
+    wAct:v('w-act'),wElecOld:v('w-elec-old'),wWaterOld:v('w-water-old'),sElecOld:v('s-elec-old'),sVac:v('s-vac'),sVacOld:v('s-vac-old'),pol};
 }
 function policyChange(){
   var pol=document.getElementById('s-policy').value,note=document.getElementById('pol-note'),row=document.getElementById('row-pct18');
@@ -1119,7 +1119,7 @@ function collectData(){
     'Supplier Distance (km)':v2('t-dist'),'Monthly Consumables (kg)':v2('t-weight'),
     'Transport EF (kg CO2e/tkm)':v2('t-ef'),'Delivery Trips/week':v2('pr-trips'),'Delivery Distance avg (km)':v2('pr-dist'),
     'CO2e/cycle (kg)':txt('r-tot'),'CO2e/set (kg)':txt('r-perset'),'Water/cycle (L)':txt('r-water'),
-    'Tool Version':'SterilPrint v1.4','Submission Notes':v2('submit-notes')
+    'Tool Version':'SterilPrint v1.5','Submission Notes':v2('submit-notes')
   };
 }
 function submitData(){
@@ -1211,7 +1211,7 @@ function submitSurvey(){
     'Timestamp':new Date().toISOString(),
     'CSSD':USER_HOSP||'','Country':USER_COUNTRY||'','Cluster':USER_CLUSTER||'',
     'Grid EF (kg CO2e/kWh)':USER_EF||'',
-    'Tool Version':'SterilPrint v1.4','Survey Type':'Usability Feedback',
+    'Tool Version':'SterilPrint v1.5','Survey Type':'Usability Feedback',
     'E1':document.getElementById('sq-e1').value.trim(),
     'E2':document.getElementById('sq-e2').value.trim(),
     'B4':surveyData['b4']||'N/A'
